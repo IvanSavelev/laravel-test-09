@@ -1,3 +1,4 @@
+@extends('admin.admin')
 @section('content_basis')
 <div class="o-page">
     <div class="o-page__sidebar js-page-sidebar">
@@ -11,7 +12,7 @@
                 <span class="c-sidebar__title">Dashboards</span>
                 <ul class="c-sidebar__list">
                     <li>
-                        <a class="c-sidebar__link" href="{{ route ('products.list')}}">
+                        <a class="c-sidebar__link" href="{{ route ('admin.product.list')}}">
                             <i class="c-sidebar__icon feather icon-home"></i>Dashboard 1
                         </a>
                     </li>

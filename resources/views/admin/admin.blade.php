@@ -16,41 +16,40 @@
   <link rel="shortcut icon" href="/_admin/favicon.ico" type="image/x-icon">
 
   <!-- Stylesheet -->
-  <link href="/_admin/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="/_admin/css/bootstrap.css">
+  <link rel="stylesheet" href="/_admin/css/summernote/summernote.css">
   <link rel="stylesheet" href="/_admin/css/neat.min.css">
   <link rel="stylesheet" href="/_admin/css/neat.min.css.map">
   <link rel="stylesheet" href="/_admin/css/stylesheet.css">
 
 
-  <!-- include libraries(jQuery, bootstrap) -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.js"></script>
 
 
-  <!-- include summernote css/js-->
-  <link href="/_admin/css/summernote/summernote-lite.css" rel="stylesheet">
-
-  <script src="/_admin/js/summernote/summernote-lite.js" defer></script>
-
-
-  <script>
-      $(document).ready(function () {
-          $('.summernote').summernote({
-              height: 228,
-              callbacks: {
-                  onImageUpload: function (files) {
-                      var el = $(this);
-                      sendFile(files[0], el);
-                  }
-              }
-          });
-      });
-  </script>
 </head>
 <body>
 
-@yield('content')
+@yield('content_basis')
+<script src="/_admin/js/neat.js"></script>
 
+<script src="/_admin/js/bootstrap.js"></script>
+<script src="/_admin/js/summernote/summernote.js"></script>
+<script src="/_admin/js/customer.js"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.summernote').summernote({
+            height: 228,
+            callbacks: {
+                onImageUpload: function (files) {
+                    var el = $(this);
+                    sendFile(files[0], el);
+                }
+            }
+        });
+    });
+</script>
 <!-- Main JavaScript -->
 <script>
     function sendFile(file, el) {
@@ -71,6 +70,7 @@
             contentType: false,
             processData: false,
             success: function (url2) {
+                alert(url2);
                 el.summernote('insertImage', url2);
             }
         });
@@ -78,7 +78,6 @@
 
 </script>
 @yield('script_down')
-<script src="/_admin/js/neat.min.js?v=1.0"></script>
-<script src="/_admin/js/customer.js"></script>
+
 </body>
 </html>

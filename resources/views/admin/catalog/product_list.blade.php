@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col-12">
     <div class="u-mb-small u-text-right">
-      <a href="{{ route ('product.add') }}" class="c-btn c-btn--info">Добавить</a>
+      <a href="{{ route ('admin.product.add') }}" class="c-btn c-btn--info">Добавить</a>
     </div>
   </div>
 </div>

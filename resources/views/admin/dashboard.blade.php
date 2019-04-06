@@ -1,5 +1,6 @@
 @extends('admin.basis')
 @section('content')
+
 <div class="row">
   <div class="col-md-4">
     <div class="c-state-card c-state-card--info">

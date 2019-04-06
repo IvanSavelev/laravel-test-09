@@ -2,7 +2,7 @@
 @section('object_id'){{$object_id}}@endsection
 @section('object_type'){{$object_type}}@endsection
 @section('content')
-  <form enctype="multipart/form-data" action="{{ route ('products.save') }}" method="POST">
+  <form enctype="multipart/form-data" action="{{ route ('admin.product.save') }}" method="POST">
       @csrf
   <div class="row">
     <div class="col-12">
@@ -187,13 +187,14 @@
 @section('script_down')
   <script>
 
-      $(document).ready(function() {
+      $(document).ready(function () {
           //Добавляем/обновляем изображение
-          $('input[data-type=image_product]').change(function(){
+          $('input[data-type=image_product]').change(function () {
               file = this.files;
               productAddImage(file[0], $(this));
           });
       });
+
       function productAddImage(file, this_dom) {
           $.ajaxSetup({
               headers: {
@@ -207,11 +208,11 @@
           $.ajax({
               data: form_data,
               type: "POST",
-              url: '{{ url('/admin/products/send_file') }}',
+              url: '{{ url('/admin/product/send_file') }}',
               cache: false,
               contentType: false,
               processData: false,
-              success: function(url2) {
+              success: function (url2) {
                   var table_row = this_dom.closest('.c-table__row');
                   $img = table_row.find("img");
                   $img.attr('src', url2);
@@ -219,6 +220,7 @@
               }
           });
       }
+
       function addImageBox(table_row) {
           $clone = table_row.clone(true);
           $clone.appendTo("tbody");

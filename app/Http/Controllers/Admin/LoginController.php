@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 class LoginController extends Controller
 {
@@ -29,11 +31,24 @@ class LoginController extends Controller
     protected $redirectTo = '/home';
 	
 	
-	public function showLoginForm()
+	public function getLogin()
 	{
 		if (Auth::check()) {
 			return	redirect()->route('admin.dashboard');
 		}
 		return view('admin.login');
 	}
+	
+	
+	public function authenticate(Request $request)
+	{
+		$credentials = $request->only('name', 'password');
+		
+		if (Auth::attempt($credentials)) {
+			// Authentication passed...
+			return	redirect()->route('admin.dashboard');
+		}
+	}
+	
+	
 }

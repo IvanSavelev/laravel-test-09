@@ -1,5 +1,5 @@
 @extends('admin.admin')
-@section('content')
+@section('content_basis')
   <div class="o-page o-page--center">
     <div class="o-page__card">
       <div class="c-card c-card--center">
