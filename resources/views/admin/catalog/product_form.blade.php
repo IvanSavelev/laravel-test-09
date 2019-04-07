@@ -3,7 +3,8 @@
 @section('object_type'){{$object_type}}@endsection
 @section('content')
   <form enctype="multipart/form-data" action="{{ route ('admin.product.save') }}" method="POST">
-      @csrf
+  @csrf
+  <input type="hidden" name="object_id" id="object_id" value="{{$object_id}}">
   <div class="row">
     <div class="col-12">
       <nav class="c-tabs">
@@ -35,30 +36,17 @@
 
             <div class="row">
               <div class="col-xl-6">
-                <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="name">Имя</label>
-                  <input class="c-input" type="text" id="title">
-                </div>
-
-                <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="name">h1</label>
-                  <input class="c-input" type="text" id="title">
-                </div>
-
-                <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="">Модель</label>
-                  <input class="c-input" type="text" id="model">
-                </div>
-                <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="user-phone">Цена</label>
-                  <input class="c-input" type="tel" id="user-phone">
-                </div>
+                @include('admin.field_input', ['name' => 'title', 'label' => 'Имя', 'required' => true])
+                @include('admin.field_input', ['name' => 'h1', 'label' => 'h1'])
+                @include('admin.field_input', ['name' => 'model', 'label' => 'Модель', 'required' => true])
+                @include('admin.field_input', ['name' => 'price', 'label' => 'Цена', 'required' => true])
+                @include('admin.field_checkbox', ['name' => 'visible', 'label' => 'Видимость'])
               </div>
 
               <div class="col-xl-6">
                 <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="user-zip">Описание</label>
-                  <textarea id="summernote" class="summernote"></textarea>
+                  <label class="c-field__label" for="description">Описание</label>
+                  <textarea id="summernote" class="summernote" name="description" value="{{ old('description') }}"></textarea>
                 </div>
               </div>
             </div>
@@ -70,13 +58,13 @@
             <div class="row">
               <div class="col-xl-6">
                 <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="">Meta title</label>
-                  <input class="c-input" type="text" id="model">
+                  <label class="c-field__label" for="meta_title">Meta title</label>
+                  <input class="c-input" type="text" id="meta_title" name="meta_title" value="{{ old('meta_title') }}">
                 </div>
 
                 <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="user-zip">Meta описание</label>
-                  <textarea class="c-input"></textarea>
+                  <label class="c-field__label" for="meta_description">Meta описание</label>
+                  <textarea class="c-input" id="meta_description" name="meta_description" value="{{ old('meta_description') }}" ></textarea>
                 </div>
               </div>
 
@@ -87,10 +75,6 @@
           <!--- 2 TAB --->
           <div class="c-tabs__pane" id="nav-image" role="tabpanel" aria-labelledby="nav-seo-tab">
             <div class="row">
-
-
-
-
                 <div class="col-12">
                   <div class="c-table-responsive@wide">
                     <table class="c-table">
@@ -103,25 +87,8 @@
                       </thead>
 
                       <tbody>
-                      <tr class="c-table__row">
-                        <td class="c-table__cell">
-                          <div class="o-media">
-                            <div class="o-media__img u-mr-xsmall">
-                              <div class="c-avatar c-avatar--small">
-                                <img class="" src="http://via.placeholder.com/72" alt="Jessica Alba">
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="c-table__cell"><form enctype="multipart/form-data" action="admin/products/save" method="POST">
-                            <input type="file" data-type="image_product" multiple="multiple" accept=".txt,image/*">
-
-                        </td>
-                        <td class="c-table__cell">
-                          <a href="#" class="c-btn c-btn--danger u-mb-xsmall">Удалить</a>
-                        </td>
-                      </tr>
-
+                        @include('admin.field_image_tr', ['delete' => false])
+                        @include('admin.field_image_tr', ['delete' => false, 'class' => 'hidden'])
                       </tbody>
                     </table>
                   </div>
@@ -208,7 +175,7 @@
           $.ajax({
               data: form_data,
               type: "POST",
-              url: '{{ url('/admin/product/send_file') }}',
+              url: '{{ url('/admin/product/add_image') }}',
               cache: false,
               contentType: false,
               processData: false,
@@ -216,13 +183,15 @@
                   var table_row = this_dom.closest('.c-table__row');
                   $img = table_row.find("img");
                   $img.attr('src', url2);
-                  addImageBox(table_row);
+                  table_row.find('[data-type="delete"]').removeClass('hidden');
+                  addImageBox();
               }
           });
       }
-
-      function addImageBox(table_row) {
-          $clone = table_row.clone(true);
+      //Add empti fild image
+      function addImageBox() {
+          $clone = $('tbody').find('.c-table__row.hidden').clone(true);
+          $clone.removeClass('hidden');
           $clone.appendTo("tbody");
       }
   </script>

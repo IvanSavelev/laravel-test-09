@@ -35,7 +35,7 @@ Route::group(['prefix' => 'admin','middleware' => ['web','auth']], function () {
 	Route::get('product', 'Admin\ProductController@list')->name('admin.product.list');
 	Route::get('product/add', 'Admin\ProductController@add')->name('admin.product.add');
 	Route::post('product/save', 'Admin\ProductController@save')->name('admin.product.save');
-	Route::any('product/send_file', 'admin\ProductController@send_file');
+	Route::any('product/add_image', 'admin\ProductController@addImage');
 	
 	
 });

@@ -19,20 +19,19 @@
           <th class="c-table__cell c-table__cell--head">Имя</th>
           <th class="c-table__cell c-table__cell--head">Модель</th>
           <th class="c-table__cell c-table__cell--head">Цена</th>
+          <th class="c-table__cell c-table__cell--head"></th>
         </tr>
         </thead>
 
         <tbody>
         @forelse($products as $product)
         <tr class="c-table__row">
-          <td class="c-table__cell">
-            <input class="c-choice__input" id="checkbox2" name="checkboxes" type="checkbox">
-          </td>
+          <td class="c-table__cell">{{ $product->product_id }}</td>
           <td class="c-table__cell">
             <div class="o-media">
               <div class="o-media__img u-mr-xsmall">
                 <div class="c-avatar c-avatar--small">
-                  <img class="c-avatar__img" src="http://via.placeholder.com/72" alt="Jessica Alba">
+                  <img class="c-avatar__img" src="{{ $product->image }}" alt="{{ $product->title }}">
                 </div>
               </div>
               <div class="o-media__body">
@@ -43,17 +42,17 @@
           </td>
           <td class="c-table__cell">{{ $product->model }}</td>
           <td class="c-table__cell">{{ $product->price }}</td>
-          <td class="c-table__cell">{{ $product->title }}</td>
+
           <td class="c-table__cell">
             <div class="c-dropdown dropdown">
-              <a href="#" class="c-btn c-btn--info has-icon dropdown-toggle" id="dropdownMenuTable1"
-                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a href="#" class="c-btn c-btn--info has-icon dropdown-toggle" id="dropdownMenuTable{{ $product->product_id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 More <i class="feather icon-chevron-down"></i>
               </a>
 
-              <div class="c-dropdown__menu dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuTable1">
+              <div class="c-dropdown__menu dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuTable{{ $product->product_id }}">
                 <a class="c-dropdown__item dropdown-item" href="#">Редактировать</a>
                 <a class="c-dropdown__item dropdown-item" href="#">Посмотреть</a>
+                <a class="c-dropdown__item dropdown-item" href="#">Link Three</a>
               </div>
             </div>
           </td>

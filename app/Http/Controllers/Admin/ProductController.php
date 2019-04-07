@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Product;
+use App\ProductImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class ProductController extends Controller
      */
     public function list()
     {
-	    $products = Product::paginate(2);
+	    $products = Product::paginate(2000);
 	    return view('admin.catalog.product_list', compact('products'));
     }
 
@@ -39,12 +40,49 @@ class ProductController extends Controller
    */
   public function save(Request $request)
   {
-    $input1 = $request->all();
-    $input2 = $request->input();
-    return redirect()->route('products.list');
+	  
+	  $request->validate([
+		  'title' => 'required|max:255',
+		  'h1' => 'max:255',
+		  'model' => 'required|max:255|unique:products',
+		  'price' => 'required|max:14|regex:/^\d+(\.\d{1,2})?$/',
+		  'description' => '',
+		  'meta_title' => 'max:255',
+		  'meta_description' => 'max:255',
+		  'visible' => 'boolean',
+	  ]);
+	
+	  $product = new Product;
+	  $product->title = $request->title;
+	  $product->h1 = request('h1', '');
+	  $product->model = $request->model;
+	  
+	  $product->image = $this->getImageLoad($request);
+	  $product->price = $request->price;
+	  $product->description = request('description', '');
+	  $product->meta_title = request('meta_title', '');
+	  $product->meta_description = request('meta_description', '');
+	  $product->visible = request('visible', 0);
+	  $product->save();
+	  
+	  
+    return redirect()->route('admin.product.list');
   }
+	
+	/**
+	 *
+	 * @param $request
+	 * @return string|null - path to image first
+	 */
+	private function getImageLoad($request)
+	{
+		$product_id = (int)$request->object_id;
+		$flight = ProductImage::where('product_id', $product_id)->orderBy('sort_order', 'desc')->value('image');
+		return $flight;
+	}
 
-  public  function send_file(Request $request) {
+  
+  public  function addImage(Request $request) {
     if ($request->file('photo')->isValid()) {
       $photo_file = $request->photo->getClientOriginalName();
       $photo_filename = pathinfo($photo_file, PATHINFO_FILENAME);
@@ -57,9 +95,9 @@ class ProductController extends Controller
 
       $path = $request->photo->storeAs('images/' . $object_type . '/' . $object_id  , $photo_name, 'public');
       $path = '/storage/' . $path;
-      $sort_order_max = DB::table('product_image')->max('sort_order');
-      $id = DB::table('product_image')->insertGetId([
-        'product_id' => 1,
+      $sort_order_max = DB::table('products_image')->max('sort_order');
+      $id = DB::table('products_image')->insertGetId([
+        'product_id' => (int)$object_id,
         'image' => $path,
         'sort_order' => $sort_order_max + 1,
       ]);

@@ -1,0 +1,5 @@
+.required:before {
+    content: '* ';
+    color: #F00;
+    font-weight: bold;
+}

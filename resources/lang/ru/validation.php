@@ -12,7 +12,8 @@ return [
 	| as the size rules. Feel free to tweak each of these messages here.
 	|
 	*/
-	
+	'regex' => ':attribute неправильный формат.',
+	'required' => ':attribute должно быть заполнено.',
 	'confirmed' => ':attribute должен совпадать.',
 	'unique' => ':attribute уже есть в системе.',
 	'min' => [
