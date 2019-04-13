@@ -3,3 +3,10 @@
     color: #F00;
     font-weight: bold;
 }
+.visible_off {
+    opacity: 0.5;
+}
+.content
+{
+    padding-bottom: 30px;
+}

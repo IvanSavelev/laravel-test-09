@@ -3,7 +3,12 @@
     <div class="o-media">
       <div class="o-media__img u-mr-xsmall">
         <div class="c-avatar c-avatar--small">
-          <img class="" src="/_admin/img/image_empty_72.png" alt="Нет изображения">
+          @empty($object)
+            <img class="" src="/_admin/img/image_empty_72.png" alt="Нет изображения">
+          @else
+            <img class="" src="{{ $object->image }}" alt="Нет изображения">
+          @endempty
+
         </div>
       </div>
     </div>
@@ -12,6 +17,10 @@
       <input type="file" data-type="image_product" multiple="multiple" accept=".txt,image/*">
   </td>
   <td class="c-table__cell">
-    <a href="#" data-type="delete" class="c-btn c-btn--danger u-mb-xsmall @if(!isset($delete) or !$delete)hidden @endif">Удалить</a>
+    @if(!isset($delete_key) or !$delete_key)
+      <button data-type="delete" class="c-btn c-btn--danger u-mb-xsmall hidden">Удалить</button>
+    @else
+      <button data-type="delete" class="c-btn c-btn--danger u-mb-xsmall" data-delete_key="{{ $delete_key }}">Удалить</button>
+    @endif
   </td>
 </tr>

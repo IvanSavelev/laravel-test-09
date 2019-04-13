@@ -29,13 +29,15 @@ Route::post('admin/login', 'Admin\LoginController@authenticate')->name('admin.po
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::group(['prefix' => 'admin','middleware' => ['web','auth']], function () {
-	Route::any('send_file', 'admin\AdminController@send_file'); //Вставка изображения в визивик
+	Route::post('send_file', 'admin\AdminController@send_file'); //Вставка изображения в визивик
 	Route::get('dashboard', 'Admin\AdminController@dashboard')->name('admin.dashboard');
 	
 	Route::get('product', 'Admin\ProductController@list')->name('admin.product.list');
 	Route::get('product/add', 'Admin\ProductController@add')->name('admin.product.add');
 	Route::post('product/save', 'Admin\ProductController@save')->name('admin.product.save');
-	Route::any('product/add_image', 'admin\ProductController@addImage');
+	Route::get('product/{id_product}/edit', 'admin\ProductController@edit')->name('admin.product.edit');
+	Route::post('product/add_image', 'admin\ProductController@addImage');
+	Route::post('product/delete_image', 'admin\ProductController@deleteImage');
 	
 	
 });

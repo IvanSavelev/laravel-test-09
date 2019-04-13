@@ -2,6 +2,8 @@
 @section('object_id'){{$object_id}}@endsection
 @section('object_type'){{$object_type}}@endsection
 @section('content')
+  @include('admin.breadcrumbs', ['parents' => [['url' => '/admin/product', 'name' => 'Продукты']], 'name' => 'Продукт'])
+
   <form enctype="multipart/form-data" action="{{ route ('admin.product.save') }}" method="POST">
   @csrf
   <input type="hidden" name="object_id" id="object_id" value="{{$object_id}}">
@@ -36,36 +38,25 @@
 
             <div class="row">
               <div class="col-xl-6">
-                @include('admin.field_input', ['name' => 'title', 'label' => 'Имя', 'required' => true])
-                @include('admin.field_input', ['name' => 'h1', 'label' => 'h1'])
-                @include('admin.field_input', ['name' => 'model', 'label' => 'Модель', 'required' => true])
-                @include('admin.field_input', ['name' => 'price', 'label' => 'Цена', 'required' => true])
-                @include('admin.field_checkbox', ['name' => 'visible', 'label' => 'Видимость'])
+                @include('admin.field_text', ['object' => $product, 'name' => 'title', 'label' => 'Имя', 'required' => true])
+                @include('admin.field_text', ['object' => $product, 'name' => 'h1', 'label' => 'h1'])
+                @include('admin.field_text', ['object' => $product, 'name' => 'model', 'label' => 'Модель', 'required' => true])
+                @include('admin.field_text', ['object' => $product, 'name' => 'price', 'label' => 'Цена', 'format' => 'price', 'required' => true])
+                @include('admin.field_checkbox', ['object' => $product, 'name' => 'visible', 'label' => 'Видимость'])
               </div>
 
               <div class="col-xl-6">
-                <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="description">Описание</label>
-                  <textarea id="summernote" class="summernote" name="description" value="{{ old('description') }}"></textarea>
-                </div>
+                @include('admin.field_textarea_vis', ['object' => $product, 'name' => 'description', 'label' => 'Описание'])
               </div>
             </div>
           </div>
-
 
           <!--- 2 TAB --->
           <div class="c-tabs__pane" id="nav-seo" role="tabpanel" aria-labelledby="nav-seo-tab">
             <div class="row">
               <div class="col-xl-6">
-                <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="meta_title">Meta title</label>
-                  <input class="c-input" type="text" id="meta_title" name="meta_title" value="{{ old('meta_title') }}">
-                </div>
-
-                <div class="c-field u-mb-medium">
-                  <label class="c-field__label" for="meta_description">Meta описание</label>
-                  <textarea class="c-input" id="meta_description" name="meta_description" value="{{ old('meta_description') }}" ></textarea>
-                </div>
+                @include('admin.field_text', ['object' => $product, 'name' => 'meta_title', 'label' => 'Meta title'])
+                @include('admin.field_textarea', ['object' => $product, 'name' => 'meta_description', 'label' => 'Meta описание'])
               </div>
 
               <div class="col-xl-6">
@@ -87,8 +78,12 @@
                       </thead>
 
                       <tbody>
-                        @include('admin.field_image_tr', ['delete' => false])
-                        @include('admin.field_image_tr', ['delete' => false, 'class' => 'hidden'])
+                        @forelse ($product_image as $item)
+                          @include('admin.field_image_tr', ['object' => $item, 'delete_key' => $item->product_image_id ])
+                        @empty
+                        @endforelse
+                        @include('admin.field_image_tr', [])
+                        @include('admin.field_image_tr', ['class' => 'hidden'])
                       </tbody>
                     </table>
                   </div>
@@ -101,46 +96,9 @@
           <!--- BUTTON --->
           <div class="col-12">
             <div class="row">
-              <span class="c-divider u-mv-medium"></span>
-
-
-              <div class="col-12 col-sm-7 col-xl-2 u-mr-auto u-mb-xsmall">
+              <div class="col-12 col-sm-7 col-xl-2 u-p-small u-mr-auto u-mb-xsmall">
                 <button type="submit" class="c-btn c-btn--info c-btn--fullwidth">Сохранить</button>
               </div>
-
-              <div class="col-12 col-sm-5 col-xl-3 u-text-right">
-                <button class="c-btn c-btn--danger c-btn--fullwidth c-btn--outline" data-toggle="modal"
-                        data-target="#modal-delete">Delete My Account
-                </button>
-
-                <div class="c-modal c-modal--small modal fade" id="modal-delete" tabindex="-1" role="dialog"
-                     aria-labelledby="modal-delete">
-                  <div class="c-modal__dialog modal-dialog" role="document">
-                    <div class="c-modal__content">
-                      <div class="c-modal__body">
-                                      <span class="c-modal__close" data-dismiss="modal" aria-label="Close">
-                                          <i class="feather icon-x"></i>
-                                      </span>
-
-                        <span class="c-icon c-icon--danger c-icon--large u-mb-small">
-                                        <i class="feather icon-alert-triangle"></i>
-                                      </span>
-                        <h3 class="u-mb-small">Do you want to delete your account?</h3>
-
-                        <p class="u-mb-medium">By deleting you account, you no longer have access to your dashboard,
-                          members and your information.</p>
-
-                        <div class="u-text-center">
-                          <a href="#" class="c-btn c-btn--danger c-btn--outline u-mr-small" data-dismiss="modal"
-                             aria-label="Close">Cancel</a>
-                          <a href="#" class="c-btn c-btn--danger">Delete</a>
-                        </div>
-                      </div>
-                    </div><!-- // .c-modal__content -->
-                  </div><!-- // .c-modal__dialog -->
-                </div><!-- // .c-modal -->
-              </div>
-            </div>
           </div>
 
 
@@ -155,11 +113,18 @@
   <script>
 
       $(document).ready(function () {
-          //Добавляем/обновляем изображение
+          //Add/update image
           $('input[data-type=image_product]').change(function () {
               file = this.files;
               productAddImage(file[0], $(this));
           });
+          //Delete image
+          $('button[data-type=delete]').click(function () {
+              productDeleteImage($(this));
+              return false;
+
+          });
+
       });
 
       function productAddImage(file, this_dom) {
@@ -179,21 +144,47 @@
               cache: false,
               contentType: false,
               processData: false,
-              success: function (url2) {
+              success: function (data) {
                   var table_row = this_dom.closest('.c-table__row');
                   $img = table_row.find("img");
-                  $img.attr('src', url2);
+                  $img.attr('src', data['src']);
                   table_row.find('[data-type="delete"]').removeClass('hidden');
-                  addImageBox();
+                  $clone = $('tbody').find('.c-table__row.hidden').clone(true);
+                  $clone.removeClass('hidden');
+                  var delete_button = $clone.find('[data-type="delete"]');
+                  delete_button.removeClass('hidden');
+                  delete_button.attr('data-delete_key', data['delete_key']);
+
+                  $clone.appendTo("tbody");
               }
           });
       }
-      //Add empti fild image
-      function addImageBox() {
-          $clone = $('tbody').find('.c-table__row.hidden').clone(true);
-          $clone.removeClass('hidden');
-          $clone.appendTo("tbody");
+
+
+      function productDeleteImage(this_dom) {
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+          });
+          var form_data = new FormData();
+          form_data.append('delete_key', this_dom.data('delete_key'));
+          form_data.append('object_id', $('#object_id').val());
+          form_data.append('object_type', $('#object_type').val());
+          $.ajax({
+              data: form_data,
+              type: "POST",
+              url: '{{ url('/admin/product/delete_image') }}',
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function () {
+                var table_row = this_dom.closest('.c-table__row');
+                table_row.remove();
+              }
+          });
       }
+
   </script>
 
 @endsection

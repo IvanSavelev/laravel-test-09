@@ -70,7 +70,6 @@
             contentType: false,
             processData: false,
             success: function (url2) {
-                alert(url2);
                 el.summernote('insertImage', url2);
             }
         });

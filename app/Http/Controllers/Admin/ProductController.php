@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
+	const PATH_FOLDER_IMAGE = 'images/product/';
     /**
      * Display a listing of the resource.
      *
@@ -29,8 +33,13 @@ class ProductController extends Controller
      */
 		public function add(Request $request)
 		{
-			$max = Product::max('product_id');
-			return view('admin.catalog.product_form', ['object_id' => $max+1, 'object_type' => 'product']);
+			$next_id = Product::max('product_id') + 1;
+			//Clear image artifact
+			$dump_pr = ProductImage::where('product_id', $next_id);
+			$dump_pr->delete();
+			Storage::disk('public')->deleteDirectory(self::PATH_FOLDER_IMAGE . $next_id . '/');
+			
+			return view('admin.catalog.product_form', ['object_id' => $next_id, 'object_type' => 'product', 'product' => null]);
 		}
 
   /**
@@ -40,37 +49,40 @@ class ProductController extends Controller
    */
   public function save(Request $request)
   {
-	  
-	  $request->validate([
+	  $product_id = (int)$request->object_id;
+	  if(Product::where('product_id', $product_id)->exists()) {
+		  $product = Product::where('product_id', $product_id)->first();
+		  $model_validate = ['required', 'max:255', Rule::unique('products')->ignore($product)];
+	  } else {
+		  $product = new Product;
+		  $model_validate = ['required', 'max:255', Rule::unique('products')];
+	  }
+	  Validator::make($request->all(), [
 		  'title' => 'required|max:255',
 		  'h1' => 'max:255',
-		  'model' => 'required|max:255|unique:products',
-		  'price' => 'required|max:14|regex:/^\d+(\.\d{1,2})?$/',
+		  'model' => $model_validate,
+		  'price' => 'required|max:14|regex:/^[ 0-9]+(\.[0-9]+)?$/',
 		  'description' => '',
 		  'meta_title' => 'max:255',
 		  'meta_description' => 'max:255',
-		  'visible' => 'boolean',
-	  ]);
-	
-	  $product = new Product;
+	  ])->validate();
+	  
 	  $product->title = $request->title;
 	  $product->h1 = request('h1', '');
 	  $product->model = $request->model;
-	  
 	  $product->image = $this->getImageLoad($request);
-	  $product->price = $request->price;
+	  $product->price = str_replace(' ', '', $request->price);
 	  $product->description = request('description', '');
 	  $product->meta_title = request('meta_title', '');
 	  $product->meta_description = request('meta_description', '');
-	  $product->visible = request('visible', 0);
+	  $product->visible = $request->visible == 'on'?1:0;
 	  $product->save();
-	  
 	  
     return redirect()->route('admin.product.list');
   }
 	
 	/**
-	 *
+	 * Returns the path to the first image
 	 * @param $request
 	 * @return string|null - path to image first
 	 */
@@ -80,8 +92,12 @@ class ProductController extends Controller
 		$flight = ProductImage::where('product_id', $product_id)->orderBy('sort_order', 'desc')->value('image');
 		return $flight;
 	}
-
-  
+	
+	/**
+	 * Add image for product
+	 * @param Request $request
+	 * @return array
+	 */
   public  function addImage(Request $request) {
     if ($request->file('photo')->isValid()) {
       $photo_file = $request->photo->getClientOriginalName();
@@ -91,58 +107,47 @@ class ProductController extends Controller
       $photo_name = $photo_filename . '.' . time() . '.' . $photo_extension;
 
       $object_id = $request->input('object_id');
-      $object_type = $request->input('object_type');
-
-      $path = $request->photo->storeAs('images/' . $object_type . '/' . $object_id  , $photo_name, 'public');
+      $path = $request->photo->storeAs(self::PATH_FOLDER_IMAGE . $object_id  , $photo_name, 'public');
       $path = '/storage/' . $path;
       $sort_order_max = DB::table('products_image')->max('sort_order');
-      $id = DB::table('products_image')->insertGetId([
+	    $product_image_id = DB::table('products_image')->insertGetId([
         'product_id' => (int)$object_id,
         'image' => $path,
         'sort_order' => $sort_order_max + 1,
       ]);
     }
-
-    return $path;
+    return ['src' => $path, 'delete_key'=> $product_image_id];
   }
-
-  /**
-   *
-   */
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-		public function store(StoreProductRequest $request)
-		{
-			Product::create($request->all());
-			return redirect()->route('products.index')->with(['message' => 'Products added successfully']);
-		}
+	
 	
 	/**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
+	 * Delete image for product
+	 * @param Request $request
+	 * @return string
+	 */
+	public  function deleteImage(Request $request) {
+		$delete_key = (int)$request->input('delete_key');
+		
+		//Delete image
+		$dump_pr = ProductImage::where('product_image_id', $delete_key)->first();
+		$image = \str_replace('/storage/', '', $dump_pr->image);
+		Storage::disk('public')->deleteDirectory($image);
+		//Delete sql field
+		$dump_pr = ProductImage::where('product_image_id', $delete_key)->first();
+		$dump_pr->delete();
+	}
+  
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-		public function edit($id)
+		public function edit($product_id)
 		{
-			$product = Product::findOrFail($id);
-			return view('products.edit', compact('product'));
+			$product = Product::findOrFail($product_id);
+			$product_image = ProductImage::where('product_id', $product_id)->get();
+			return view('admin.catalog.product_form', compact('product', 'product_image') + ['object_id' => $product->product_id, 'object_type' => 'product']);
 		}
 	
 	/**

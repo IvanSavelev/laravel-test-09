@@ -257,7 +257,7 @@
             <input type="hidden" name="object_type" id="object_type" value="@yield('object_type')">
         </header>
 
-        <div class="container">
+        <div class="container content">
             @yield('content')
         </div>
     </main>
