@@ -76,7 +76,7 @@
     }
 
 </script>
-@yield('script_down')
-
+@yield('script_down_1')
+@yield('script_down_2')
 </body>
 </html>

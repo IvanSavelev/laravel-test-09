@@ -3,14 +3,14 @@
 @section('object_type'){{$object_type}}@endsection
 @section('content')
   @include('admin.breadcrumbs', ['parents' => [['url' => '/admin/product', 'name' => 'Продукты']], 'name' => 'Продукт'])
-
+  @include('admin.helper_message', ['errors' => $errors, 'info' => session('status')])
   <form enctype="multipart/form-data" action="{{ route ('admin.product.save') }}" method="POST">
   @csrf
   <input type="hidden" name="object_id" id="object_id" value="{{$object_id}}">
   <div class="row">
     <div class="col-12">
-      <nav class="c-tabs">
-        <div class="c-tabs__list nav nav-tabs" id="myTab" role="tablist">
+      <div class="c-tabs">
+        <nav class="c-tabs__list nav nav-tabs" id="myTab" role="tablist">
           <a class="c-tabs__link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab"
              aria-controls="nav-general" aria-selected="true">
                     <span class="c-tabs__link-icon">
@@ -29,10 +29,9 @@
                       <i class="feather icon-sliders"></i>
                     </span>Изображения
           </a>
-        </div>
+        </nav>
 
         <div class="c-tabs__content tab-content" id="nav-tabContent">
-
           <!--- 1 TAB --->
           <div class="c-tabs__pane active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
 
@@ -50,7 +49,6 @@
               </div>
             </div>
           </div>
-
           <!--- 2 TAB --->
           <div class="c-tabs__pane" id="nav-seo" role="tabpanel" aria-labelledby="nav-seo-tab">
             <div class="row">
@@ -74,16 +72,18 @@
                         <th class="c-table__cell c-table__cell--head">Изображение</th>
                         <th class="c-table__cell c-table__cell--head"></th>
                         <th class="c-table__cell c-table__cell--head"></th>
+                        <th class="c-table__cell c-table__cell--head"></th>
                       </tr>
                       </thead>
 
                       <tbody>
-                        @forelse ($product_image as $item)
-                          @include('admin.field_image_tr', ['object' => $item, 'delete_key' => $item->product_image_id ])
-                        @empty
-                        @endforelse
-                        @include('admin.field_image_tr', [])
-                        @include('admin.field_image_tr', ['class' => 'hidden'])
+                        @isset($product_image)
+                          @foreach ($product_image as $item)
+                            @include('admin.field_image_tr', ['object' => $item, 'sort_key'=> $item->product_image_id, 'delete_key' => $item->product_image_id ])
+                          @endforeach
+                        @endisset
+                        @include('admin.field_image_tr', ['td_sort_order' => false])
+                        @include('admin.field_image_tr', ['class' => 'hidden', 'td_sort_order' => false])
                       </tbody>
                     </table>
                   </div>
@@ -93,97 +93,107 @@
               </div>
             </div>
           </div>
-          <!--- BUTTON --->
-          <div class="col-12">
-            <div class="row">
-              <div class="col-12 col-sm-7 col-xl-2 u-p-small u-mr-auto u-mb-xsmall">
-                <button type="submit" class="c-btn c-btn--info c-btn--fullwidth">Сохранить</button>
-              </div>
+        </div>
+    </div>
+      <!--- BUTTON --->
+      <div class="col-12">
+        <div class="row c-invoice">
+          <div class="col-12 u-p-small u-mr-auto">
+
+                <button type="submit" class="c-btn c-btn--info">Сохранить</button>
+                <button type="submit" data-type="update" class="c-btn c-btn--info">Сохранить и остаться на странице</button>
+
+            </div>
           </div>
 
-
         </div>
-      </nav>
-    </div>
+
+
+      </div>
   </div>
 
 </form>
 @endsection
-@section('script_down')
+@section('script_down_2')
   <script>
 
-      $(document).ready(function () {
-          //Add/update image
-          $('input[data-type=image_product]').change(function () {
-              file = this.files;
-              productAddImage(file[0], $(this));
-          });
-          //Delete image
-          $('button[data-type=delete]').click(function () {
-              productDeleteImage($(this));
-              return false;
-
-          });
-
+    $(document).ready(function () {
+      //Add/update image
+      $('input[data-type=image_product]').change(function () {
+        file = this.files;
+        productAddImage(file[0], $(this));
+      });
+      //Delete image
+      $('button[data-type=delete]').click(function () {
+        productDeleteImage($(this));
+        return false;
       });
 
-      function productAddImage(file, this_dom) {
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-              }
-          });
-          var form_data = new FormData();
-          form_data.append('photo', file);
-          form_data.append('object_id', $('#object_id').val());
-          form_data.append('object_type', $('#object_type').val());
-          $.ajax({
-              data: form_data,
-              type: "POST",
-              url: '{{ url('/admin/product/add_image') }}',
-              cache: false,
-              contentType: false,
-              processData: false,
-              success: function (data) {
-                  var table_row = this_dom.closest('.c-table__row');
-                  $img = table_row.find("img");
-                  $img.attr('src', data['src']);
-                  table_row.find('[data-type="delete"]').removeClass('hidden');
-                  $clone = $('tbody').find('.c-table__row.hidden').clone(true);
-                  $clone.removeClass('hidden');
-                  var delete_button = $clone.find('[data-type="delete"]');
-                  delete_button.removeClass('hidden');
-                  delete_button.attr('data-delete_key', data['delete_key']);
 
-                  $clone.appendTo("tbody");
-              }
-          });
-      }
+    });
+
+    function productAddImage(file, this_dom) {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+      });
+      var form_data = new FormData();
+      form_data.append('photo', file);
+      form_data.append('object_id', $('#object_id').val());
+      form_data.append('object_type', $('#object_type').val());
+      $.ajax({
+        data: form_data,
+        type: "POST",
+        url: '{{ url('/admin/product/add_image') }}',
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          var table_row = this_dom.closest('.c-table__row');
+          $img = table_row.find("img");
+          $img.attr('src', data['src']);
+
+          table_row.find('[data-type="delete"]').removeClass('hidden');
+          var td_sort_order = table_row.find('[data-type="sort"]');
+          td_sort_order.removeClass('hidden');
+          td_sort_order.val(data['sort_order']);
+
+          var delete_button = td_sort_order.find('[data-type="delete"]');
+          delete_button.removeClass('hidden');
+          delete_button.attr('data-delete_key', data['delete_key']);
+
+          $clone = $('tbody').find('.c-table__row.hidden').clone(true);
+          $clone.removeClass('hidden');
+          $clone.appendTo("tbody");
+        }
+      });
+    }
 
 
-      function productDeleteImage(this_dom) {
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-              }
-          });
-          var form_data = new FormData();
-          form_data.append('delete_key', this_dom.data('delete_key'));
-          form_data.append('object_id', $('#object_id').val());
-          form_data.append('object_type', $('#object_type').val());
-          $.ajax({
-              data: form_data,
-              type: "POST",
-              url: '{{ url('/admin/product/delete_image') }}',
-              cache: false,
-              contentType: false,
-              processData: false,
-              success: function () {
-                var table_row = this_dom.closest('.c-table__row');
-                table_row.remove();
-              }
-          });
-      }
+    function productDeleteImage(this_dom) {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+      });
+      var form_data = new FormData();
+      form_data.append('delete_key', this_dom.data('delete_key'));
+      form_data.append('object_id', $('#object_id').val());
+      form_data.append('object_type', $('#object_type').val());
+      $.ajax({
+        data: form_data,
+        type: "POST",
+        url: '{{ url('/admin/product/delete_image') }}',
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function () {
+          var table_row = this_dom.closest('.c-table__row');
+          table_row.remove();
+        }
+      });
+    }
 
   </script>
 

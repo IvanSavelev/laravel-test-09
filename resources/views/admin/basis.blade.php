@@ -264,6 +264,21 @@
 </div>
 @endsection
 
-@section('script_down')
-@yield('script_down')
+@section('script_down_1')
+  <script>
+
+    $(document).ready(function () {
+      //Update product
+      $('button[data-type=update]').click(function () {
+        pageUpdate();
+      });
+    });
+    function pageUpdate() {
+      $('<input />').attr('type', 'hidden').attr('name', "redirect_here").attr('value', 1).appendTo('form');
+      return true;
+    }
+  </script>
+@endsection
+@section('script_down_2')
+  @yield('script_down_2')
 @endsection

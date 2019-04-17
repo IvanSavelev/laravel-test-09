@@ -10,3 +10,48 @@
 {
     padding-bottom: 30px;
 }
+
+
+tbody .c-choice__input {
+    position: relative;
+    width: unset;
+    height: unset;
+    margin: unset;
+    padding: unset;
+    border: unset;
+    white-space: unset;
+    overflow: unset;
+    clip: unset;
+    -webkit-clip-path: unset;
+    clip-path: unset;
+    height: 12px;
+}
+tbody .c-choice__input:before
+{
+    display: inline-block;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    transition: all .3s;
+    border: 1px solid #18449c;
+    background-color: #fff;
+    color: #fff;
+    line-height: 15px;
+    text-align: center;
+    content: "";
+    visibility: visible;
+    border-radius: 4px;
+    position: absolute;
+}
+tbody .c-choice__input:checked:before {
+    border-color: #2083fe;
+    background-color: #2083fe;
+    font-family: feather;
+    font-size: 10px;
+    content: "\e83f";
+}
+
+.content .c-alert__icon {
+    top: 25px;
+}

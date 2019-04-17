@@ -38,6 +38,7 @@ Route::group(['prefix' => 'admin','middleware' => ['web','auth']], function () {
 	Route::get('product/{id_product}/edit', 'admin\ProductController@edit')->name('admin.product.edit');
 	Route::post('product/add_image', 'admin\ProductController@addImage');
 	Route::post('product/delete_image', 'admin\ProductController@deleteImage');
+	Route::post('product/delete', 'admin\ProductController@delete');
 	
 	
 });

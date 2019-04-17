@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function list()
     {
-	    $products = Product::paginate(2000);
+	    $products = Product::paginate(2);
 	    return view('admin.catalog.product_list', compact('products'));
     }
 
@@ -35,8 +35,8 @@ class ProductController extends Controller
 		{
 			$next_id = Product::max('product_id') + 1;
 			//Clear image artifact
-			$dump_pr = ProductImage::where('product_id', $next_id);
-			$dump_pr->delete();
+			ProductImage::where('product_id', $next_id)->delete();
+			
 			Storage::disk('public')->deleteDirectory(self::PATH_FOLDER_IMAGE . $next_id . '/');
 			
 			return view('admin.catalog.product_form', ['object_id' => $next_id, 'object_type' => 'product', 'product' => null]);
@@ -78,7 +78,32 @@ class ProductController extends Controller
 	  $product->visible = $request->visible == 'on'?1:0;
 	  $product->save();
 	  
-    return redirect()->route('admin.product.list');
+	  //Save sort image
+		$sort_order_mas = request('sort_order', []);
+		foreach ($sort_order_mas as $key => &$item) {
+			if($item === null) {
+				unset($sort_order_mas[$key]);
+			} else {
+				$item = (int)$item;
+			}
+		}
+		unset($item);
+	
+	  $product_image = ProductImage::whereIn('product_image_id', \array_keys($sort_order_mas))->get();
+	  foreach ($product_image as $item) {
+		  if($item->sort_order !== $sort_order_mas[$item->product_image_id]) {
+			  $item->sort_order = $sort_order_mas[$item->product_image_id];
+			  $item->save();
+		  }
+	  }
+	  
+	  if(request('redirect_here', 0)) {
+		  return redirect()->back()->with('status', 'Продукт успешно изменён!');
+	  } else {
+		  return redirect()->route('admin.product.list')->with('status', 'Продукт успешно изменён!');
+	  }
+	  
+   
   }
 	
 	/**
@@ -89,7 +114,7 @@ class ProductController extends Controller
 	private function getImageLoad($request)
 	{
 		$product_id = (int)$request->object_id;
-		$flight = ProductImage::where('product_id', $product_id)->orderBy('sort_order', 'desc')->value('image');
+		$flight = ProductImage::where('product_id', $product_id)->orderBy('sort_order', 'asc')->value('image');
 		return $flight;
 	}
 	
@@ -109,15 +134,29 @@ class ProductController extends Controller
       $object_id = $request->input('object_id');
       $path = $request->photo->storeAs(self::PATH_FOLDER_IMAGE . $object_id  , $photo_name, 'public');
       $path = '/storage/' . $path;
-      $sort_order_max = DB::table('products_image')->max('sort_order');
+      $sort_order_max = DB::table('products_image')->where('product_id', (int)$object_id)->max('sort_order');
 	    $product_image_id = DB::table('products_image')->insertGetId([
         'product_id' => (int)$object_id,
         'image' => $path,
         'sort_order' => $sort_order_max + 1,
       ]);
     }
-    return ['src' => $path, 'delete_key'=> $product_image_id];
+    return ['src' => $path, 'delete_key'=> $product_image_id, 'sort_order' => $sort_order_max + 1];
   }
+	
+	/**
+	 * Delete image for product
+	 * @param Request $request
+	 * @return string
+	 */
+	public  function delete(Request $request) {
+		$ids_delete = $request->input('ids_delete');
+		$ids_delete = explode(',', $ids_delete);
+		Product::whereIn('product_id',$ids_delete)->delete();
+		foreach ($ids_delete as $item) {
+			Storage::disk('public')->deleteDirectory(self::PATH_FOLDER_IMAGE . $item . '/');
+		}
+	}
 	
 	
 	/**
@@ -131,7 +170,7 @@ class ProductController extends Controller
 		//Delete image
 		$dump_pr = ProductImage::where('product_image_id', $delete_key)->first();
 		$image = \str_replace('/storage/', '', $dump_pr->image);
-		Storage::disk('public')->deleteDirectory($image);
+		Storage::disk('public')->delete($image);
 		//Delete sql field
 		$dump_pr = ProductImage::where('product_image_id', $delete_key)->first();
 		$dump_pr->delete();
@@ -146,53 +185,7 @@ class ProductController extends Controller
 		public function edit($product_id)
 		{
 			$product = Product::findOrFail($product_id);
-			$product_image = ProductImage::where('product_id', $product_id)->get();
+			$product_image = ProductImage::where('product_id', $product_id)->orderBy('sort_order')->get();
 			return view('admin.catalog.product_form', compact('product', 'product_image') + ['object_id' => $product->product_id, 'object_type' => 'product']);
 		}
-	
-	/**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-		public function update(StoreProductRequest $request, $id)
-		{
-			$product = Product::findOrFail($id);
-			$product->update($request->all());
-			return redirect()->route('products.index')->with(['message' => 'Product updated successfully']);
-		}
-	
-	/**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-		public function destroy($id)
-		{
-			$product = Product::findOrFail($id);
-			$product->delete();
-			return redirect()->route('authors.index')->with(['message' => 'Product deleted successfully']);
-		}
-	
-	public function massDestroy(Request $request)
-	{
-		$ids = $request->input('ids');
-		if($ids) {
-			$products = explode(',', $request->input('ids'));
-			foreach ($products as $product_id) {
-				$product = Product::findOrFail($product_id);
-				$product->delete();
-			}
-			$message = 'Авторы успешно удалены';
-		} else {
-			$message = 'Нет выбранных авторов';
-		}
-		
-		return redirect()->route('authors.index')->with(['message' => $message]);
-	}
-	
-	
 }
