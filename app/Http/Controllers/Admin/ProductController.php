@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function list()
     {
-	    $products = Product::paginate(2);
+	    $products = Product::paginate(50);
 	    return view('admin.catalog.product_list', compact('products'));
     }
 

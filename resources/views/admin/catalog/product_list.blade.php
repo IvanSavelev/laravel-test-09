@@ -1,21 +1,18 @@
 @extends('admin.basis')
 @section('content')
 @include('admin.helper_message', ['errors' => $errors, 'info' => session('status')])
-
-
+@include('admin.breadcrumbs', ['parents' => [], 'name' => 'Товары'])
 <div class="row">
   <div class="col-12">
     <div class="u-mb-small u-text-right">
       <a href="{{ route ('admin.product.add') }}" class="c-btn c-btn--info">Добавить</a>
       <button data-type="delete" class="c-btn c-btn--danger"><i class="feather icon-trash-2"></i></button>
     </div>
-
-
   </div>
 </div>
 <div class="row">
   <div class="col-12">
-    <div class="c-table-responsive@wide">
+    <div class="u-mb-small c-table-responsive@wide">
       <table class="c-table">
         <thead class="c-table__head">
         <tr class="c-table__row">
@@ -65,10 +62,14 @@
     </div>
   </div>
 </div>
-{{ $products->links() }}
+<div class="row">
+  <div class="col-12">
+    @include('admin.helper_paginator', ['products' => $products])
+  </div>
+</div>
 @endsection
 
-@section('script_down')
+@section('script_down_2')
   <script>
       $(document).ready(function () {
 

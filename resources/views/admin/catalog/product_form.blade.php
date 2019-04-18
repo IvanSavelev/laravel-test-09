@@ -2,13 +2,14 @@
 @section('object_id'){{$object_id}}@endsection
 @section('object_type'){{$object_type}}@endsection
 @section('content')
-  @include('admin.breadcrumbs', ['parents' => [['url' => '/admin/product', 'name' => 'Продукты']], 'name' => 'Продукт'])
+  @include('admin.breadcrumbs', ['parents' => [['url' => '/admin/product', 'name' => 'Товары']], 'name' => 'Товар'])
   @include('admin.helper_message', ['errors' => $errors, 'info' => session('status')])
-  <form enctype="multipart/form-data" action="{{ route ('admin.product.save') }}" method="POST">
-  @csrf
-  <input type="hidden" name="object_id" id="object_id" value="{{$object_id}}">
+
   <div class="row">
     <div class="col-12">
+      <form enctype="multipart/form-data" action="{{ route ('admin.product.save') }}" method="POST">
+        @csrf
+        <input type="hidden" name="object_id" id="object_id" value="{{$object_id}}">
       <div class="c-tabs">
         <nav class="c-tabs__list nav nav-tabs" id="myTab" role="tablist">
           <a class="c-tabs__link active" id="nav-general-tab" data-toggle="tab" href="#nav-general" role="tab"
@@ -108,11 +109,11 @@
 
         </div>
 
-
+      </form>
       </div>
   </div>
 
-</form>
+
 @endsection
 @section('script_down_2')
   <script>
