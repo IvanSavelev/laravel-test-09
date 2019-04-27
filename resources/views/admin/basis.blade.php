@@ -23,11 +23,10 @@
             </div>
           </li>
 
-
           <ul class="c-sidebar__list">
             <li>
-              <a class="c-sidebar__link" href="{{ route ('admin.product.list')}}">
-                <i class="c-sidebar__icon feather icon-home"></i>Dashboard 1
+              <a class="c-sidebar__link" href="{{ route ('admin.index.form')}}">
+                <i class="c-sidebar__icon feather icon-home"></i>Главная
               </a>
             </li>
             <li>

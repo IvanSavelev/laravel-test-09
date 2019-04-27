@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 //Auth::routes();
 
@@ -40,5 +38,16 @@ Route::group(['prefix' => 'admin','middleware' => ['web','auth']], function () {
 	Route::post('product/delete_image', 'admin\ProductController@deleteImage');
 	Route::post('product/delete', 'admin\ProductController@delete');
 	
+	Route::get('index', 'Admin\IndexController@form')->name('admin.index.form');
+	Route::post('index', 'Admin\IndexController@save')->name('admin.index.save');
+	//Route::put('index', 'Admin\IndexController@save')->name('admin.index.save');
+	
+	
+	
 	
 });
+
+
+//FRONT
+Route::get('/', 'Front\IndexController@index')->name('front.index');
+//Route::get('/index', 'Front\IndexController@index')->name('front.index');

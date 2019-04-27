@@ -62,7 +62,7 @@
               </div>
             </div>
           </div>
-          <!--- 2 TAB --->
+          <!--- 3 TAB --->
           <div class="c-tabs__pane" id="nav-image" role="tabpanel" aria-labelledby="nav-seo-tab">
             <div class="row">
                 <div class="col-12">
@@ -152,15 +152,13 @@
         processData: false,
         success: function (data) {
           var table_row = this_dom.closest('.c-table__row');
-          $img = table_row.find("img");
-          $img.attr('src', data['src']);
+          table_row.find("img").attr('src', data['src']);
 
-          table_row.find('[data-type="delete"]').removeClass('hidden');
           var td_sort_order = table_row.find('[data-type="sort"]');
           td_sort_order.removeClass('hidden');
           td_sort_order.val(data['sort_order']);
 
-          var delete_button = td_sort_order.find('[data-type="delete"]');
+          var delete_button = table_row.find('[data-type="delete"]');
           delete_button.removeClass('hidden');
           delete_button.attr('data-delete_key', data['delete_key']);
 
