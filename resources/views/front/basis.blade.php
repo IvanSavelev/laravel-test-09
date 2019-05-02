@@ -116,17 +116,17 @@
       </li>
     </ul>
   </nav>
-  <header class="header-style-1 static">
+  <header class="header-style-1">
     <div class="container">
       <div class="row">
         <div class="header-1-inner">
           <a class="brand-logo animsition-link" href="index.html">
-            <img class="img-responsive" src="images/logo.png" alt="" />
+            <img class="img-responsive" src="front/images/logo.png" alt="" />
           </a>
           <nav>
             <ul class="menu hidden-xs">
               <li>
-                <a href="index.html">Home</a>
+                <a href="{{ route('front.index') }}">Home</a>
                 <ul>
                   <li>
                     <a href="index.html">Home Version 1</a>
@@ -292,7 +292,7 @@
       <div class="footer-style-1-inner">
         <div class="widget-footer widget-text col-first col-small">
           <a href="#">
-            <img class="logo-footer" src="images/logo.png" alt="Logo Organic" />
+            <img class="logo-footer" src="front/images/logo.png" alt="Logo Organic" />
           </a>
           <div class="widget-link">
             <ul>
@@ -388,22 +388,22 @@
             <ul class="list-unstyle">
               <li>
                 <a href="#">
-                  <img src="images/icons/creadit-card-01.png" alt="creadit card" />
+                  <img src="front/images/icons/creadit-card-01.png" alt="creadit card" />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src="images/icons/creadit-card-02.png" alt="creadit card" />
+                  <img src="front/images/icons/creadit-card-02.png" alt="creadit card" />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src="images/icons/creadit-card-03.png" alt="creadit card" />
+                  <img src="front/images/icons/creadit-card-03.png" alt="creadit card" />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src="images/icons/creadit-card-04.png" alt="creadit card" />
+                  <img src="front/images/icons/creadit-card-04.png" alt="creadit card" />
                 </a>
               </li>
             </ul>
@@ -427,36 +427,36 @@
             <div class="woocommerce-product-gallery">
               <div class="main-carousel-product-quick-view">
                 <div class="item">
-                  <img class="img-responsive" src="images/product/01.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/01.jpg" alt="product thumbnail" />
                 </div>
                 <div class="item">
-                  <img class="img-responsive" src="images/product/02.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/02.jpg" alt="product thumbnail" />
                 </div>
                 <div class="item">
-                  <img class="img-responsive" src="images/product/03.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/03.jpg" alt="product thumbnail" />
                 </div>
                 <div class="item">
-                  <img class="img-responsive" src="images/product/04.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/04.jpg" alt="product thumbnail" />
                 </div>
                 <div class="item">
-                  <img class="img-responsive" src="images/product/05.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/05.jpg" alt="product thumbnail" />
                 </div>
               </div>
               <div class="thumbnail-carousel-product-quickview">
                 <div class="item">
-                  <img class="img-responsive" src="images/product/01.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/01.jpg" alt="product thumbnail" />
                 </div>
                 <div class="item">
-                  <img class="img-responsive" src="images/product/02.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/02.jpg" alt="product thumbnail" />
                 </div>
                 <div class="item">
-                  <img class="img-responsive" src="images/product/03.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/03.jpg" alt="product thumbnail" />
                 </div>
                 <div class="item">
-                  <img class="img-responsive" src="images/product/04.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/04.jpg" alt="product thumbnail" />
                 </div>
                 <div class="item">
-                  <img class="img-responsive" src="images/product/05.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="front/images/product/05.jpg" alt="product thumbnail" />
                 </div>
               </div>
             </div>

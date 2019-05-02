@@ -42,9 +42,6 @@ Route::group(['prefix' => 'admin','middleware' => ['web','auth']], function () {
 	Route::post('index', 'Admin\IndexController@save')->name('admin.index.save');
 	//Route::put('index', 'Admin\IndexController@save')->name('admin.index.save');
 	
-	
-	
-	
 });
 
 

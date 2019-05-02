@@ -3,7 +3,7 @@
 namespace App;
 
 
-trait Fun
+trait F
 {
 	/**
 	 * shorthand for retrieving and casting optional array keys
@@ -13,7 +13,7 @@ trait Fun
 	 * @param mixed $default value to return if $arr does not contain $key or $arr[$key] is null
 	 * @return mixed $arr[$key] cast to $type or $default if $arr[$key] is not set or $arr is not an array
 	 */
-	function val($arr, $key, $type = '', $default = false)
+	public function val($arr, $key, $type = '', $default = false)
 	{
 		if (\is_array($key) and !empty($key)) {
 			$last_key = \array_pop($key);

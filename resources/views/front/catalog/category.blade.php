@@ -1,10 +1,10 @@
-@extends('/front.basis')
+@extends('front.basis')
 @section('content')
   <div class="banner banner-image-fit-screen">
     <div class="rev_slider slider-home-1" id="slider_1">
       <ul>
         <li>
-          <img class="rev-slidebg" src="@widget('front.image', ['size' => '1900x900'], $settings, 'index_image')" alt="demo" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10">
+          <img class="rev-slidebg" src="/storage/images_front/slider/1.jpg" alt="demo" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10">
         </li>
       </ul>
     </div>
@@ -18,7 +18,7 @@
               <a href="#">
                 <figure class="product-category-item">
                   <div class="thumbnail">
-                    <img src="/front/images/category-product/1.jpg" alt="" />
+                    <img src="images/category-product/1.jpg" alt="" />
                   </div>
                   <figcaption>
                     <h3>Vegetable</h3>
@@ -30,7 +30,7 @@
               <a href="#">
                 <figure class="product-category-item">
                   <div class="thumbnail">
-                    <img src="/front/images/category-product/2.jpg" alt="" />
+                    <img src="images/category-product/2.jpg" alt="" />
                   </div>
                   <figcaption>
                     <h3>Fruit</h3>
@@ -42,7 +42,7 @@
               <a href="#">
                 <figure class="product-category-item">
                   <div class="thumbnail">
-                    <img src="/front/images/category-product/3.jpg" alt="" />
+                    <img src="images/category-product/3.jpg" alt="" />
                   </div>
                   <figcaption>
                     <h3>Meat</h3>
@@ -67,7 +67,7 @@
             <div class="product product-style-2">
               <div class="img-wrapper">
                 <a href="product-detail.html">
-                  <img class="img-responsive" src="/front/images/product/isotope-01.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="images/product/isotope-01.jpg" alt="product thumbnail" />
                 </a>
                 <div class="product-control-wrapper bottom-right">
                   <div class="wrapper-control-item">
@@ -102,7 +102,7 @@
             <div class="product product-style-2">
               <div class="img-wrapper">
                 <a href="product-detail.html">
-                  <img class="img-responsive" src="/front/images/product/isotope-03.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="images/product/isotope-03.jpg" alt="product thumbnail" />
                 </a>
                 <div class="product-control-wrapper bottom-right">
                   <div class="wrapper-control-item">
@@ -137,7 +137,7 @@
             <div class="product product-style-2">
               <div class="img-wrapper">
                 <a href="product-detail.html">
-                  <img class="img-responsive" src="/front/images/product/isotope-02.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="images/product/isotope-02.jpg" alt="product thumbnail" />
                 </a>
                 <div class="product-control-wrapper bottom-right">
                   <div class="wrapper-control-item">
@@ -172,7 +172,7 @@
             <div class="product product-style-2">
               <div class="img-wrapper">
                 <a href="product-detail.html">
-                  <img class="img-responsive" src="/front/images/product/isotope-04.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="images/product/isotope-04.jpg" alt="product thumbnail" />
                 </a>
                 <div class="product-control-wrapper bottom-right">
                   <div class="wrapper-control-item">
@@ -207,7 +207,7 @@
             <div class="product product-style-2">
               <div class="img-wrapper">
                 <a href="product-detail.html">
-                  <img class="img-responsive" src="/front/images/product/isotope-05.jpg" alt="product thumbnail" />
+                  <img class="img-responsive" src="images/product/isotope-05.jpg" alt="product thumbnail" />
                 </a>
                 <div class="product-control-wrapper bottom-right">
                   <div class="wrapper-control-item">
@@ -243,7 +243,7 @@
     </div>
   </section>
   <div class="call-to-action-style-1">
-    <img class="rellax bg-overlay" src="/front/images/call-to-action/1.jpg" alt="" />
+    <img class="rellax bg-overlay" src="images/call-to-action/1.jpg" alt="" />
     <div class="overlay-call-to-action"></div>
     <div class="container">
       <div class="row">
@@ -264,7 +264,7 @@
             <div class="post">
               <div class="img-wrapper js-set-bg-blog-thumb">
                 <a href="blog-detail.html">
-                  <img src="/front/images/blog/01.jpg" alt="Image" />
+                  <img src="images/blog/01.jpg" alt="Image" />
                 </a>
               </div>
               <div class="desc">
@@ -283,7 +283,7 @@
             <div class="post">
               <div class="img-wrapper js-set-bg-blog-thumb">
                 <a href="blog-detail.html">
-                  <img src="/front/images/blog/02.jpg" alt="Image" />
+                  <img src="images/blog/02.jpg" alt="Image" />
                 </a>
               </div>
               <div class="desc">
@@ -302,7 +302,7 @@
             <div class="post">
               <div class="img-wrapper js-set-bg-blog-thumb">
                 <a href="blog-detail.html">
-                  <img src="/front/images/blog/03.jpg" alt="Image" />
+                  <img src="images/blog/03.jpg" alt="Image" />
                 </a>
               </div>
               <div class="desc">
@@ -324,11 +324,6 @@
 
 @endsection
 @section('script_down')
- 
-
-
-
-
   <script src="/front/js/library/jquery.min.js"></script>
   <script src="/front/js/library/bootstrap.min.js"></script>
   <script src="/front/js/function-check-viewport.js"></script>
@@ -343,6 +338,8 @@
   <script src="/front/js/library/in-view.min.js"></script>
   <script src="/front/js/library/countUp.js"></script>
   <script src="/front/js/library/animsition.min.js"></script>
+
+
   <link rel="stylesheet" type="text/css" href="/front/revolution/css/settings.css" />
   <link rel="stylesheet" type="text/css" href="/front/revolution/css/layers.css" />
   <link rel="stylesheet" type="text/css" href="/front/revolution/css/navigation.css" />
@@ -364,13 +361,9 @@
   </script>
   <script src="/front/js/config-mm-menu.js"></script>
   <script src="/front/js/config-set-bg-blog-thumb.js"></script>
-  <script src="/front/js/config-isotope-product-home-1.js">
-
-
-  </script>
+  <script src="/front/js/config-isotope-product-home-1.js"></script>
   <script src="/front/js/config-carousel-thumbnail.js"></script>
   <script src="/front/js/config-carousel-product-quickview.js"></script>
   <!-- Demo Only-->
   <script src="/front/js/demo-add-to-cart.js"></script>
-
 @endsection

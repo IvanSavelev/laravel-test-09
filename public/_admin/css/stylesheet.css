@@ -12,7 +12,7 @@
 }
 
 
-tbody .c-choice__input {
+.c-table tbody .c-choice__input {
     position: relative;
     width: unset;
     height: unset;

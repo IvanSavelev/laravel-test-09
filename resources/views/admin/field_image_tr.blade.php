@@ -1,4 +1,4 @@
-<tr class="c-table__row @if(!empty($class)) {{ $class }} @endif">
+<tr class="c-table__row @if(!empty($class)) {{ $class }} @endif" data-product_image_id="@if(isset($sort_key)){{ $sort_key }}@endif">
   <td class="c-table__cell">
     <div class="o-media">
       <div class="o-media__img u-mr-xsmall">

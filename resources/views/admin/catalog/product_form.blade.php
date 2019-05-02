@@ -38,15 +38,15 @@
 
             <div class="row">
               <div class="col-xl-6">
-                @include('admin.field_text', ['object' => $product, 'name' => 'title', 'label' => 'Имя', 'required' => true])
-                @include('admin.field_text', ['object' => $product, 'name' => 'h1', 'label' => 'h1'])
-                @include('admin.field_text', ['object' => $product, 'name' => 'model', 'label' => 'Модель', 'required' => true])
-                @include('admin.field_text', ['object' => $product, 'name' => 'price', 'label' => 'Цена', 'format' => 'price', 'required' => true])
-                @include('admin.field_checkbox', ['object' => $product, 'name' => 'visible', 'label' => 'Видимость'])
+                @widget('admin.text', ['label'=> 'Имя', 'required' => true], $product, 'title', $errors)
+                @widget('admin.text', ['label'=> 'h1'], $product, 'h1', $errors)
+                @widget('admin.text', ['label'=> 'Модель', 'required' => true], $product, 'model', $errors)
+                @widget('admin.text', ['label'=> 'Цена', 'required' => true, 'format' => 'price'], $product, 'price', $errors)
+                @widget('admin.checkbox', ['label'=> 'Видимость'], $product, 'visible', $errors)
               </div>
 
               <div class="col-xl-6">
-                @include('admin.field_textarea_vis', ['object' => $product, 'name' => 'description', 'label' => 'Описание'])
+                @widget('admin.textarea_vis', ['label'=> 'Описание'], $product, 'description', $errors)
               </div>
             </div>
           </div>
@@ -54,8 +54,8 @@
           <div class="c-tabs__pane" id="nav-seo" role="tabpanel" aria-labelledby="nav-seo-tab">
             <div class="row">
               <div class="col-xl-6">
-                @include('admin.field_text', ['object' => $product, 'name' => 'meta_title', 'label' => 'Meta title'])
-                @include('admin.field_textarea', ['object' => $product, 'name' => 'meta_description', 'label' => 'Meta описание'])
+                @widget('admin.text', ['label'=> 'Meta title'], $product, 'meta_title', $errors)
+                @widget('admin.textarea', ['label'=> 'Meta описание'], $product, 'meta_description', $errors)
               </div>
 
               <div class="col-xl-6">
@@ -142,6 +142,8 @@
       var form_data = new FormData();
       form_data.append('photo', file);
       form_data.append('object_id', $('#object_id').val());
+      var table_row = this_dom.closest('.c-table__row');
+      form_data.append('product_image_id', table_row.data('product_image_id'));
       form_data.append('object_type', $('#object_type').val());
       $.ajax({
         data: form_data,
@@ -153,18 +155,21 @@
         success: function (data) {
           var table_row = this_dom.closest('.c-table__row');
           table_row.find("img").attr('src', data['src']);
+          if(data['delete_key']) {
+            var td_sort_order = table_row.find('[data-type="sort"]');
+            td_sort_order.removeClass('hidden');
+            td_sort_order.val(data['sort_order']);
 
-          var td_sort_order = table_row.find('[data-type="sort"]');
-          td_sort_order.removeClass('hidden');
-          td_sort_order.val(data['sort_order']);
+            var delete_button = table_row.find('[data-type="delete"]');
+            delete_button.removeClass('hidden');
+            delete_button.attr('data-delete_key', data['delete_key']);
 
-          var delete_button = table_row.find('[data-type="delete"]');
-          delete_button.removeClass('hidden');
-          delete_button.attr('data-delete_key', data['delete_key']);
+            var clone = $('tbody').find('.c-table__row.hidden').clone(true);
+            clone.removeClass('hidden');
+            clone.appendTo("tbody");
+          }
 
-          $clone = $('tbody').find('.c-table__row.hidden').clone(true);
-          $clone.removeClass('hidden');
-          $clone.appendTo("tbody");
+
         }
       });
     }

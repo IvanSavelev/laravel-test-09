@@ -30,8 +30,7 @@
 
             <div class="row">
               <div class="col-12">
-                @widget('image', ['obj'=> $settings, 'val'=> 'index_image'])
-                @include('admin.field_image', ['src' => !empty($settings['index_image']->value)?$settings['index_image']->value:false])
+                @widget('admin.image', ['delete' => true], $settings, 'index_image')
               </div>
             </div>
           </div>
@@ -39,8 +38,7 @@
           <div class="c-tabs__pane" id="nav-seo" role="tabpanel" aria-labelledby="nav-seo-tab">
             <div class="row">
               <div class="col-xl-6">
-                @include('admin.field_text', ['object' => $settings, 'name' => 'meta_title', 'label' => 'Meta title'])
-                @include('admin.field_textarea', ['object' => $settings, 'name' => 'meta_description', 'label' => 'Meta описание'])
+
               </div>
 
               <div class="col-xl-6">

@@ -132,17 +132,45 @@ class ProductController extends Controller
       $photo_name = $photo_filename . '.' . time() . '.' . $photo_extension;
 
       $object_id = $request->input('object_id');
-      $path = $request->photo->storeAs(self::PATH_FOLDER_IMAGE . $object_id  , $photo_name, 'public');
+	
+	    $path_folder_image = 'images/' . str_replace('controller', '', strtolower(class_basename($this)));
+      $path = $request->photo->storeAs($path_folder_image. '/' . $object_id  , $photo_name, 'public');
       $path = '/storage/' . $path;
-      $sort_order_max = DB::table('products_image')->where('product_id', (int)$object_id)->max('sort_order');
-	    $product_image_id = DB::table('products_image')->insertGetId([
-        'product_id' => (int)$object_id,
-        'image' => $path,
-        'sort_order' => $sort_order_max + 1,
-      ]);
+	    $product_image_id = (int)$request->input('product_image_id');
+      if($product_image_id) {
+      	//Update
+	      $this->_deleteImage($product_image_id, false);
+	      ProductImage::updateOrCreate(['product_image_id' => $product_image_id], ['image' => $path]);
+	      return ['src' => $path];
+      } else {
+      	//New
+	      $sort_order_max = DB::table('products_image')->where('product_id', (int)$object_id)->max('sort_order');
+	      $product_image_id = DB::table('products_image')->insertGetId([
+		      'product_id' => (int)$object_id,
+		      'image' => $path,
+		      'sort_order' => $sort_order_max + 1,
+	      ]);
+	      return ['src' => $path, 'delete_key'=> $product_image_id, 'sort_order' => $sort_order_max + 1];
+      }
+     
+	   
     }
-    return ['src' => $path, 'delete_key'=> $product_image_id, 'sort_order' => $sort_order_max + 1];
+    
   }
+  
+  private function _deleteImage($product_image_id, $delete_bd = true)
+  {
+	  //Delete image
+	  $dump_pr = ProductImage::where('product_image_id', $product_image_id)->first();
+	  $image = \str_replace('/storage/', '', $dump_pr->image);
+	  Storage::disk('public')->delete($image);
+	  //Delete sql field
+	  if($delete_bd) {
+		  $dump_pr = ProductImage::where('product_image_id', $product_image_id)->first();
+		  $dump_pr->delete();
+	  }
+  }
+  
 	
 	/**
 	 * Delete image for product
@@ -166,14 +194,7 @@ class ProductController extends Controller
 	 */
 	public  function deleteImage(Request $request) {
 		$delete_key = (int)$request->input('delete_key');
-		
-		//Delete image
-		$dump_pr = ProductImage::where('product_image_id', $delete_key)->first();
-		$image = \str_replace('/storage/', '', $dump_pr->image);
-		Storage::disk('public')->delete($image);
-		//Delete sql field
-		$dump_pr = ProductImage::where('product_image_id', $delete_key)->first();
-		$dump_pr->delete();
+		$this->_deleteImage($delete_key);
 	}
   
     /**
