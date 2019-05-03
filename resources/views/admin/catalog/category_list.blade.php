@@ -1,11 +1,11 @@
 @extends('admin.basis')
 @section('content')
   @include('admin.helper_message', ['errors' => $errors, 'info' => session('status')])
-  @include('admin.breadcrumbs', ['parents' => [], 'name' => 'Товары'])
+  @include('admin.breadcrumbs', ['parents' => [], 'name' => 'Категории'])
   <div class="row">
     <div class="col-12">
       <div class="u-mb-small u-text-right">
-        <a href="{{ route ('admin.product.add') }}" class="c-btn c-btn--info">Добавить</a>
+        <a href="{{ route ('admin.category.add') }}" class="c-btn c-btn--info">Добавить</a>
         <button data-type="delete" class="c-btn c-btn--danger"><i class="feather icon-trash-2"></i></button>
       </div>
     </div>
@@ -19,38 +19,35 @@
             <th class="c-table__cell c-table__cell--head"></th>
             <th class="c-table__cell c-table__cell--head">ID</th>
             <th class="c-table__cell c-table__cell--head">Имя</th>
-            <th class="c-table__cell c-table__cell--head">Модель</th>
-            <th class="c-table__cell c-table__cell--head">Цена</th>
+            <th class="c-table__cell c-table__cell--head">Описание</th>
             <th class="c-table__cell c-table__cell--head"></th>
           </tr>
           </thead>
 
           <tbody>
-          @forelse($products as $product)
-            <tr class="c-table__row @if(!$product->visible) visible_off @endif">
+          @forelse($categories as $category)
+            <tr class="c-table__row @if(!$category->visible) visible_off @endif">
               <td class="c-table__cell">
-                <input class="c-choice__input" id="product_id" data-id="{{ $product->product_id }}" type="checkbox">
+                <input class="c-choice__input" id="category_id" data-id="{{ $category->category_id }}" type="checkbox">
               </td>
-              <td class="c-table__cell">{{ $product->product_id }}</td>
+              <td class="c-table__cell">{{ $category->category_id }}</td>
               <td class="c-table__cell">
                 <div class="o-media">
                   <div class="o-media__img u-mr-xsmall">
                     <div class="c-avatar c-avatar--small">
-                      <img class="c-avatar__img" @empty($product->image) src="/_admin/img/image_empty_72.png"
-                           @else src="{{ $product->image }}" @endif alt="{{ $product->title }}">
+                      <img class="c-avatar__img" @empty($category->image) src="/_admin/img/image_empty_72.png"
+                           @else src="{{ $category->image }}" @endif alt="{{ $category->title }}">
                     </div>
                   </div>
                   <div class="o-media__body">
-                    <h6>{{ $product->title }}</h6>
-                    <p>{{ $product->h1 }}</p>
+                    <h6>{{ $category->title }}</h6>
+                    <p>{{ $category->h1 }}</p>
                   </div>
                 </div>
               </td>
-              <td class="c-table__cell">{{ $product->model }}</td>
-              <td class="c-table__cell">{{ number_format($product->price, 2, '.', ' ') }}</td>
-
+              <td class="c-table__cell">{{ strip_tags($category->description) }}</td>
               <td class="c-table__cell">
-                <a href="{{ route ('admin.product.edit', $product->product_id) }}" class="c-btn c-btn--info"><i
+                <a href="{{ route ('admin.category.edit', $category->category_id) }}" class="pull-right c-btn c-btn--info"><i
                         class="feather icon-edit-2"></i></a>
               </td>
             </tr>
@@ -66,7 +63,7 @@
   </div>
   <div class="row">
     <div class="col-12">
-      @include('admin.helper_paginator', ['objects' => $products])
+      @include('admin.helper_paginator', ['objects' => $categories])
     </div>
   </div>
 @endsection
@@ -75,12 +72,12 @@
   <script>
     $(document).ready(function () {
       $('button[data-type=delete]').click(function () {
-        productDelete();
+        categoryDelete();
         return false;
       });
     });
 
-    function productDelete() {
+    function categoryDelete() {
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -104,7 +101,7 @@
       $.ajax({
         data: form_data,
         type: "POST",
-        url: '{{ url('/admin/product/delete') }}',
+        url: '{{ url('/admin/category/delete') }}',
         cache: false,
         contentType: false,
         processData: false,

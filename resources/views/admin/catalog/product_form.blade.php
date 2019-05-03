@@ -37,28 +37,23 @@
           <div class="c-tabs__pane active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
 
             <div class="row">
-              <div class="col-xl-6">
+              <div class="col-xl-12">
                 @widget('admin.text', ['label'=> 'Имя', 'required' => true], $product, 'title', $errors)
                 @widget('admin.text', ['label'=> 'h1'], $product, 'h1', $errors)
                 @widget('admin.text', ['label'=> 'Модель', 'required' => true], $product, 'model', $errors)
                 @widget('admin.text', ['label'=> 'Цена', 'required' => true, 'format' => 'price'], $product, 'price', $errors)
-                @widget('admin.checkbox', ['label'=> 'Видимость'], $product, 'visible', $errors)
-              </div>
-
-              <div class="col-xl-6">
                 @widget('admin.textarea_vis', ['label'=> 'Описание'], $product, 'description', $errors)
+                @widget('admin.checkbox', ['label'=> 'Видимость'], $product, 'visible', $errors)
+
               </div>
             </div>
           </div>
           <!--- 2 TAB --->
           <div class="c-tabs__pane" id="nav-seo" role="tabpanel" aria-labelledby="nav-seo-tab">
             <div class="row">
-              <div class="col-xl-6">
+              <div class="col-xl-12">
                 @widget('admin.text', ['label'=> 'Meta title'], $product, 'meta_title', $errors)
                 @widget('admin.textarea', ['label'=> 'Meta описание'], $product, 'meta_description', $errors)
-              </div>
-
-              <div class="col-xl-6">
               </div>
             </div>
           </div>

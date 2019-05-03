@@ -50,13 +50,16 @@ class ProductController extends Controller
   public function save(Request $request)
   {
 	  $product_id = (int)$request->object_id;
+	
+	  $product = Product::firstOrNew(['product_id' => $product_id]);
 	  if(Product::where('product_id', $product_id)->exists()) {
-		  $product = Product::where('product_id', $product_id)->first();
+	  	$add_product = false;
 		  $model_validate = ['required', 'max:255', Rule::unique('products')->ignore($product)];
 	  } else {
-		  $product = new Product;
+		  $add_product = true;
 		  $model_validate = ['required', 'max:255', Rule::unique('products')];
 	  }
+	  
 	  Validator::make($request->all(), [
 		  'title' => 'required|max:255',
 		  'h1' => 'max:255',
@@ -96,14 +99,15 @@ class ProductController extends Controller
 			  $item->save();
 		  }
 	  }
+	  if($add_product) {
+		  return redirect()->route('admin.product.list')->with('status', 'Продукт успешно добавлен!');
+	  }
 	  
 	  if(request('redirect_here', 0)) {
 		  return redirect()->back()->with('status', 'Продукт успешно изменён!');
 	  } else {
 		  return redirect()->route('admin.product.list')->with('status', 'Продукт успешно изменён!');
 	  }
-	  
-   
   }
 	
 	/**

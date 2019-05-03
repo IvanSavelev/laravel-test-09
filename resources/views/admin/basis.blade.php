@@ -10,18 +10,7 @@
         <!-- Scrollable -->
         <div class="c-sidebar__body">
 
-          <li class="c-sidebar__item has-submenu">
-            <a class="c-sidebar__link" data-toggle="collapse" href="#sidebar-submenu" aria-expanded="false"
-               aria-controls="sidebar-submenu">
-              <i class="c-sidebar__icon feather icon-grid"></i>Каталог
-            </a>
-            <div>
-              <ul class="c-sidebar__list collapse" id="sidebar-submenu">
-                <li><a class="c-sidebar__link" href="{{ route ('admin.product.list')}}">Товары</a></li>
-                <li><a class="c-sidebar__link" href="#">Категории</a></li>
-              </ul>
-            </div>
-          </li>
+
 
           <ul class="c-sidebar__list">
             <li>
@@ -40,6 +29,19 @@
               </a>
             </li>
           </ul>
+
+          <li class="c-sidebar__item has-submenu">
+            <a class="c-sidebar__link" data-toggle="collapse" href="#sidebar-submenu" aria-expanded="false"
+               aria-controls="sidebar-submenu">
+              <i class="c-sidebar__icon feather icon-grid"></i>Каталог
+            </a>
+            <div>
+              <ul class="c-sidebar__list collapse" id="sidebar-submenu">
+                <li><a class="c-sidebar__link" href="{{ route ('admin.product.list')}}">Товары</a></li>
+                <li><a class="c-sidebar__link" href="{{ route ('admin.category.list')}}">Категории</a></li>
+              </ul>
+            </div>
+          </li>
 
           <span class="c-sidebar__title">General</span>
           <ul class="c-sidebar__list">

@@ -120,7 +120,7 @@
     <div class="container">
       <div class="row">
         <div class="header-1-inner">
-          <a class="brand-logo animsition-link" href="index.html">
+          <a class="brand-logo animsition-link" href="{{ route('front.index') }}">
             <img class="img-responsive" src="front/images/logo.png" alt="" />
           </a>
           <nav>
