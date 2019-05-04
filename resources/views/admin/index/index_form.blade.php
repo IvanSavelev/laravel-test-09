@@ -31,6 +31,7 @@
             <div class="row">
               <div class="col-12">
                 @widget('admin.image', ['delete' => true], $settings, 'index_image')
+                @widget('admin.list_checkbox', ['label'=> 'Основные категории'], $categories, 'product_to_category')
               </div>
             </div>
           </div>

@@ -44,6 +44,7 @@
                 @widget('admin.text', ['label'=> 'Цена', 'required' => true, 'format' => 'price'], $product, 'price', $errors)
                 @widget('admin.textarea_vis', ['label'=> 'Описание'], $product, 'description', $errors)
                 @widget('admin.checkbox', ['label'=> 'Видимость'], $product, 'visible', $errors)
+                @widget('admin.list_checkbox', ['label'=> 'Категории'], $categories, 'product_to_category')
 
               </div>
             </div>

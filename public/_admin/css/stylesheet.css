@@ -55,3 +55,22 @@ tbody .c-choice__input:checked:before {
 .content .c-alert__icon {
     top: 25px;
 }
+.scrollbox {
+    border: 1px solid #CCCCCC;
+    width: 650px;
+    height: 150px;
+    background: #FFFFFF;
+    padding: 5px 0px 5px 10px;
+    border-radius: 5px;
+}
+.scrollbox .c-choice__label {
+    font-size: .775rem;
+    font-weight: normal;
+    margin-bottom: 0px;
+    padding-bottom: 2px;
+}
+.scrollbox .c-choice__input+.c-choice__label:before {
+    width: 14px;
+    height: 14px;
+    margin: 0 7px 0 0;
+}
