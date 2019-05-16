@@ -29,8 +29,8 @@ class Text extends AbstractWidget
 		$value = null;
 		if (is_array($object)) { //It array (table key and value)
 			if ($this->val($object, $name)) {
-				if ($object[$name]->value) {
-					$value = $object[$name]->value;
+				if (!empty($object[$name])) {
+					$value = $object[$name];
 				}
 			}
 		} else { //It object

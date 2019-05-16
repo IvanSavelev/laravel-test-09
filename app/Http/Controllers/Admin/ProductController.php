@@ -42,7 +42,7 @@ class ProductController extends Controller
 			
 			Storage::disk('public')->deleteDirectory(self::PATH_FOLDER_IMAGE . $next_id . '/');
 			
-			return view('admin.catalog.product_form', ['object_id' => $next_id, 'object_type' => 'product', 'product' => null]);
+			return view('admin.catalog.product_form', ['object_id' => $next_id, 'object_type' => 'product', 'product' => null, 'product_to_category'=> null]);
 		}
 
   /**
@@ -225,33 +225,10 @@ class ProductController extends Controller
 		{
 			$product = Product::findOrFail($product_id);
 			$product_image = ProductImage::where('product_id', $product_id)->orderBy('sort_order')->get();
-			$product_to_category = ProductToCategory::where('category_id', $product_id);
-			//$categories_bd = DB::table('categories as c')->join('products_to_categories as pc', 'c.category_id', '=', 'pc.category_id', 'right outer')->get(['pc.category_id as cat', 'pc.*', 'c.*']);
-			$categories = $this->getCategories($product_id);
-			
-			return view('admin.catalog.product_form', compact('product', 'product_image', 'product_to_category', 'categories') + ['object_id' => $product->product_id, 'object_type' => 'product']);
-		}
-		
-		private function getCategories($product_id):array {
-		//	$categories_bd = DB::table('categories as c')->join('products_to_categories as pc', 'c.category_id', '=', 'pc.category_id', 'left outer')->get(['pc.category_id as cp_category_id', 'pc.*', 'c.*']);
-			$categories_bd = DB::select('
-        SELECT pc.category_id AS cp_category_id, pc.*, c.*
-        FROM categories AS c
-        LEFT OUTER JOIN products_to_categories AS pc
-        ON c.category_id = pc.category_id AND pc.product_id = ?', [$product_id]);// Here I use a low-level query, because the high-level does not apply
-			
-			
-			
-			
-			
-			$categories = [];
-			foreach ($categories_bd as $category) {
-				$list_checkbox_item = new ListCheckboxItem();
-				$list_checkbox_item->name = 'product_to_category['. $category->category_id . ']';
-				$list_checkbox_item->title = $category->title;
-				$list_checkbox_item->status = $category->cp_category_id?true:false;
-				$categories[] = $list_checkbox_item;
+			$product_to_category = ProductToCategory::where('product_id', $product_id)->get('category_id')->toArray();
+			foreach ($product_to_category as &$item) {
+				$item = $item['category_id'];
 			}
-			return $categories;
+			return view('admin.catalog.product_form', compact('product', 'product_image', 'product_to_category') + ['object_id' => $product->product_id, 'object_type' => 'product']);
 		}
 }

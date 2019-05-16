@@ -2,10 +2,12 @@
 
 namespace App\Widgets\Admin;
 
+use App\F;
 use Arrilot\Widgets\AbstractWidget;
 
 class Checkbox extends AbstractWidget
 {
+	use F; //Plug-in universal functions
 	/**
 	 * The configuration array.
 	 *
@@ -25,8 +27,8 @@ class Checkbox extends AbstractWidget
 		$value = null;
 		if (is_array($object)) { //It array (table key and value)
 			if ($this->val($object, $name)) {
-				if ($object[$name]->value) {
-					$value = $object[$name]->value;
+				if (!empty($object[$name])) {
+					$value = $object[$name];
 				}
 			}
 		} else { //It object

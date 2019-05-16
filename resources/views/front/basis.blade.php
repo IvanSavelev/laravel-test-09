@@ -1,6 +1,6 @@
 @extends('front.front')
 @section('content_basis')
-<div class="shop-layout-4" id="page">
+<div class="home-1" id="page">
   <nav id="menu">
     <ul>
       <li>

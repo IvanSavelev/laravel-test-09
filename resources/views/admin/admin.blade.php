@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="/_admin/css/neat.min.css">
   <link rel="stylesheet" href="/_admin/css/neat.min.css.map">
   <link rel="stylesheet" href="/_admin/css/stylesheet.css">
+  <link rel="stylesheet" href="/_admin/css/bootstrap-datetimepicker.min.css" />
+
 
 
 
@@ -30,10 +32,25 @@
 
 @yield('content_basis')
 <script src="/_admin/js/neat.js"></script>
+<script src="/_admin/js/moment-with-locales.min.js"></script>
 
 <script src="/_admin/js/bootstrap.js"></script>
+<script src="/_admin/js/bootstrap-datetimepicker.min.js"></script>
+
 <script src="/_admin/js/summernote/summernote.js"></script>
 <script src="/_admin/js/customer.js"></script>
+
+<script type="text/javascript">
+  $(function () {
+    $('[data-type="datetimepicker"]').datetimepicker({
+      locale: 'ru',
+      stepping:10,
+      format: 'DD.MM.YYYY',
+
+     // daysOfWeekDisabled:[0,6]
+    });
+  });
+</script>
 
 
 

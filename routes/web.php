@@ -41,6 +41,19 @@ Route::group(['prefix' => 'admin','middleware' => ['web','auth']], function () {
 	Route::get('category/{category_id}/edit', 'Admin\CategoryController@edit')->name('admin.category.edit');
 	Route::post('category/delete', 'Admin\CategoryController@delete');
 	
+	/*
+	Route::get('article', 'Admin\ArticleController@list')->name('admin.article.list');
+	Route::get('article/add', 'Admin\ArticleController@add')->name('admin.article.add');
+	Route::post('article/save', 'Admin\ArticleController@save')->name('admin.article.save');
+	Route::get('article/{article_id}/edit', 'Admin\ArticleController@edit')->name('admin.article.edit');
+	Route::post('article/delete', 'Admin\ArticleController@delete');
+	
+	Route::post('article/save', 'Admin\ArticleController@save')->name('admin.article.save_page');
+	Route::post('article/save', 'Admin\ArticleController@save')->name('admin.articles.save');
+	*/
+	
+	
+	
 	
 	Route::get('index', 'Admin\IndexController@form')->name('admin.index.form');
 	Route::post('index', 'Admin\IndexController@save')->name('admin.index.save');
@@ -48,6 +61,18 @@ Route::group(['prefix' => 'admin','middleware' => ['web','auth']], function () {
 });
 
 
+Route::middleware(['web','auth'])->prefix('admin')->name('admin.')->group(function() {
+	Route::get('article/parent_update', 'Admin\ArticleController@parentUpdate')->name('article.parent_update');
+	Route::post('article/parent_save', 'Admin\ArticleController@parentSave')->name('article.parent_save');
+	Route::post('article/delete', 'Admin\ArticleController@delete');
+	Route::post('article/{article_id}', 'Admin\ArticleController@save')->name('article.save');
+	Route::resource('article', 'Admin\ArticleController')->except([
+		'update', 'destroy', 'edit',
+	]);
+});
+
+
 //FRONT
 Route::get('/', 'Front\IndexController@index')->name('front.index');
+Route::get('/articles', 'Front\ArticleController@index')->name('front.article');
 //Route::get('/index', 'Front\IndexController@index')->name('front.index');

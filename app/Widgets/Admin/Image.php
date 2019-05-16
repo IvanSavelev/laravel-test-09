@@ -34,8 +34,8 @@ class Image extends AbstractWidget
 		$src = null;
 		if(is_array($object)) { //Это массив объектов (таблицы ключ значение)
 			if($this->val($object, $name)) {
-				if($object[$name]->value){
-					$src = $object[$name]->value;
+				if(!empty($object[$name])){
+					$src = $object[$name];
 				}
 			}
 		} else { //Это объект

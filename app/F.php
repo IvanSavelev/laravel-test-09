@@ -32,7 +32,7 @@ trait F
 		}
 		if (!$type) return $arr[$key];
 		$res = $arr[$key];
-		if ($type === 'array') return to_array($res);
+		if ($type === 'array') return (array)$res;
 		\settype($res, $type);
 		return $res;
 	}
@@ -68,5 +68,11 @@ trait F
 			}
 		}
 		return $res;
+	}
+	
+	
+	public function replace_mask($string, $mask_array)
+	{
+		return \str_replace(\array_keys($mask_array), \array_values($mask_array), $string);
 	}
 }
