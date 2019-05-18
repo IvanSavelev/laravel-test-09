@@ -4,7 +4,7 @@
     <div class="o-page__card">
       <div class="c-card c-card--center">
           <span class="c-icon c-icon--large u-mb-small">
-            <img src="../_admin/img/logo-small.svg" alt="Neat">
+            <img src="../admin/img/logo-small.svg" alt="Neat">
           </span>
 
         <h4 class="u-mb-medium">Вход в админку</h4>

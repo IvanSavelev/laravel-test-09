@@ -30,9 +30,15 @@
 
             <div class="row">
               <div class="col-12">
+                @widget('admin.text', ['label'=> 'Имя', 'required' => true], $settings, 'title', $errors)
                 @widget('admin.image', ['delete' => true], $settings, 'image')
                 @widget('admin.list_checkbox', ['label'=> 'Основные категории', 'type' => 'categories'], $settings, 'index_categories_general')
                 @widget('admin.list_checkbox', ['label'=> 'Основные продукты', 'type' => 'products'], $settings, 'index_products_general')
+                @widget('admin.header', [], 'Блок посеридине')
+                @widget('admin.text', ['label'=> 'Заголовок'], $settings, 'middle_title', $errors)
+                @widget('admin.text', ['label'=> 'Описание'], $settings, 'middle_text', $errors)
+                @widget('admin.image', ['delete' => true], $settings, 'middle_image')
+                @widget('admin.header', [], '')
                 @widget('admin.list_checkbox', ['label'=> 'Основные статьи', 'type' => 'articles'], $settings, 'index_articles_general')
               </div>
             </div>
@@ -40,11 +46,9 @@
           <!--- 2 TAB --->
           <div class="c-tabs__pane" id="nav-seo" role="tabpanel" aria-labelledby="nav-seo-tab">
             <div class="row">
-              <div class="col-xl-6">
-
-              </div>
-
-              <div class="col-xl-6">
+              <div class="col-xl-12">
+                @widget('admin.text', ['label'=> 'Meta title'], $settings, 'meta_title', $errors)
+                @widget('admin.textarea', ['label'=> 'Meta описание'], $settings, 'meta_description', $errors)
               </div>
             </div>
           </div>

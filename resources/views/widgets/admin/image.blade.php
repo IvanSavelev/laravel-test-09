@@ -5,7 +5,7 @@
         <div class="o-media__img u-mr-xsmall">
           <div class="c-avatar c-avatar--small">
             @empty($src)
-              <img class="" src="/_admin/img/image_empty_72.png" alt="Нет изображения">
+              <img class="" src="/admin/img/image_empty_72.png" alt="Нет изображения">
             @else
               <img class="" src="{{ $src }}" alt="Изображение">
             @endempty
@@ -15,7 +15,7 @@
       </div>
     </td>
     <td class="c-table__cell">
-      <input type="file" data-type="image_product" name="image" multiple="multiple" accept=".txt,image/*">
+      <input type="file" data-type="image_product" name="{{ $name }}" multiple="multiple" accept=".txt,image/*">
     </td>
     <td class="c-table__cell">
       @if($config['delete'])

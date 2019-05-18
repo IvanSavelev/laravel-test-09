@@ -25,7 +25,7 @@ class ArticleController extends Controllers\AdminController
 	
 	public function parentSave(Request $request)
 	{
-		//IMAGE
+	
 		if ($request->file('image') and $request->file('image')->isValid()) {
 			$this->deleteImageSingleton('page_articles');
 			$this->addImageSingleton($request->image, 'page_articles');
@@ -41,7 +41,6 @@ class ArticleController extends Controllers\AdminController
 			'meta_title' => 'max:255',
 			'meta_description' => 'max:255',
 		])->validate();
-		
 		
 		$data = $request->all();
 		unset($data['image']);

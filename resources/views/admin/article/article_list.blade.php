@@ -44,7 +44,7 @@
                 <div class="o-media">
                   <div class="o-media__img u-mr-xsmall">
                     <div class="c-avatar c-avatar--small">
-                      <img class="c-avatar__img" @empty($article->image) src="/_admin/img/image_empty_72.png"
+                      <img class="c-avatar__img" @empty($article->image) src="/admin/img/image_empty_72.png"
                            @else src="{{ $article->image }}" @endif alt="{{ $article->title }}">
                     </div>
                   </div>

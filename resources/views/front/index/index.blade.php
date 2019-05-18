@@ -1,4 +1,7 @@
 @extends('front.basis')
+@section('type_page') home-1 @endsection
+@section('title') {{ $settings['title'] }}@endsection
+
 @section('content')
   {{-- BANNER --}}
   <div class="banner banner-image-fit-screen">
@@ -90,14 +93,14 @@
     </div>
   </section>
 
+  {{-- MIDDLE BLOK --}}
   <div class="call-to-action-style-1">
-    <img class="rellax bg-overlay" src="/front/images/call-to-action/1.jpg" alt="" />
+    <img class="rellax bg-overlay" src="@isset($settings['middle_image'])@widget('front.image', ['size' => '960x640'], $settings, 'middle_image')@else /front/images/call-to-action/1.jpg @endisset" alt="" />
     <div class="overlay-call-to-action"></div>
     <div class="container">
       <div class="row">
-        <p class="h3">Orchid Food</p>
-        <h2>Healthy - Fresh - Delicious.</h2>
-        <a class="btn btn-brand pill" href="#">VIEW MORE </a>
+        <p class="h3">{{ $settings['middle_title'] }}</p>
+        <h2>{{ $settings['middle_text'] }}</h2>
       </div>
     </div>
   </div>
@@ -112,23 +115,7 @@
         <div class="row blog-h reverse flex one-row multi-row-sm">
           @foreach($settings['index_articles_general'] as $article)
           <div class="col-md-4">
-            <div class="post">
-              <div class="img-wrapper js-set-bg-blog-thumb">
-                <a href="blog-detail.html">
-                  <img src="@isset($article->image)@widget('front.image', ['size' => '600x486'], $article, 'image')@else /front/images/blog/01.jpg @endisset" alt="{{ $article->title }}"/>
-                </a>
-              </div>
-              <div class="desc">
-                <h4>
-                  <a href="blog-detail.html">{{ $article->title }}</a>
-                </h4>
-                <p class="meta">
-                  <span class="time">@widget('front.date', ['format' => 'd F, Y'], $article, 'date')</span>
-                  <!--- <span class="comment">2</span> --->
-                </p>
-                <p>{!! $article->description  !!}</p>
-              </div>
-            </div>
+            @include('front.helper_article_preview', ['article' => $article])
           </div>
           @endforeach
         </div>

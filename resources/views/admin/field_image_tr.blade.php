@@ -4,7 +4,7 @@
       <div class="o-media__img u-mr-xsmall">
         <div class="c-avatar c-avatar--small">
           @empty($object)
-            <img class="" src="/_admin/img/image_empty_72.png" alt="Нет изображения">
+            <img class="" src="/admin/img/image_empty_72.png" alt="Нет изображения">
           @else
             <img class="" src="{{ $object->image }}" alt="Нет изображения">
           @endempty

@@ -113,10 +113,18 @@ class AdminController extends Controller
 		if($settings) {
 			$value = json_decode($settings->value, true);
 		}
-		$value['image'] = $path;
+		$value[$name_field_image] = $path;
 		Setting::updateOrCreate(['key' => $name], ['value' => json_encode($value)]);
 	}
 	
+	protected function returnSingleton(string $route = 'admin.dashboard')
+	{
+		if(request('redirect_here', 0)) {
+			return redirect()->back()->with('status', 'Страница успешно изменена!');
+		} else {
+			return redirect()->route($route)->with('status', 'Страница успешно изменена!');
+		}
+	}
 	
 	/**
 	 * Normalize request for only page

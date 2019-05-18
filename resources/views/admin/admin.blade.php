@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Dashboard Three | Neat</title>
+  <title>Магазин (тест)</title>
   <meta name="description" content="Neat">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="_token" content="{{csrf_token()}}"/>
@@ -12,16 +12,16 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
   <!-- Favicon -->
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="shortcut icon" href="/_admin/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/front/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/admin/img/favicon.ico" type="image/x-icon">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="/_admin/css/bootstrap.css">
-  <link rel="stylesheet" href="/_admin/css/summernote/summernote.css">
-  <link rel="stylesheet" href="/_admin/css/neat.min.css">
-  <link rel="stylesheet" href="/_admin/css/neat.min.css.map">
-  <link rel="stylesheet" href="/_admin/css/stylesheet.css">
-  <link rel="stylesheet" href="/_admin/css/bootstrap-datetimepicker.min.css" />
+  <link rel="stylesheet" href="/admin/css/bootstrap.css">
+  <link rel="stylesheet" href="/admin/css/summernote/summernote.css">
+  <link rel="stylesheet" href="/admin/css/neat.min.css">
+  <link rel="stylesheet" href="/admin/css/neat.min.css.map">
+  <link rel="stylesheet" href="/admin/css/stylesheet.css">
+  <link rel="stylesheet" href="/admin/css/bootstrap-datetimepicker.min.css" />
 
 
 
@@ -31,14 +31,14 @@
 <body>
 
 @yield('content_basis')
-<script src="/_admin/js/neat.js"></script>
-<script src="/_admin/js/moment-with-locales.min.js"></script>
+<script src="/admin/js/neat.js"></script>
+<script src="/admin/js/moment-with-locales.min.js"></script>
 
-<script src="/_admin/js/bootstrap.js"></script>
-<script src="/_admin/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/admin/js/bootstrap.js"></script>
+<script src="/admin/js/bootstrap-datetimepicker.min.js"></script>
 
-<script src="/_admin/js/summernote/summernote.js"></script>
-<script src="/_admin/js/customer.js"></script>
+<script src="/admin/js/summernote/summernote.js"></script>
+<script src="/admin/js/customer.js"></script>
 
 <script type="text/javascript">
   $(function () {

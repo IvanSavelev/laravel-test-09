@@ -36,7 +36,7 @@
                 <div class="o-media">
                   <div class="o-media__img u-mr-xsmall">
                     <div class="c-avatar c-avatar--small">
-                      <img class="c-avatar__img" @empty($product->image) src="/_admin/img/image_empty_72.png"
+                      <img class="c-avatar__img" @empty($product->image) src="/admin/img/image_empty_72.png"
                            @else src="{{ $product->image }}" @endif alt="{{ $product->title }}">
                     </div>
                   </div>
