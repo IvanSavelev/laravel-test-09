@@ -31,7 +31,7 @@ Route::middleware(['web','auth'])->prefix('admin')->name('admin.')->group(functi
 	Route::get('product', 'Admin\ProductController@list')->name('product.list');
 	Route::get('product/add', 'Admin\ProductController@add')->name('product.add');
 	Route::post('product/save', 'Admin\ProductController@save')->name('product.save');
-	Route::get('product/{product_id}/edit', 'Admin\ProductController@edit')->name('admin.product.edit');
+	Route::get('product/{product_id}/edit', 'Admin\ProductController@edit')->name('product.edit');
 	Route::post('product/add_image', 'Admin\ProductController@addImage');
 	Route::post('product/delete_image', 'Admin\ProductController@deleteImage');
 	Route::post('product/delete', 'Admin\ProductController@delete');

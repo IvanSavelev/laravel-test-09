@@ -71,7 +71,7 @@
           </div>
 
 
-          <div class="c-dropdown__menu has-arrow dropdown-menu dropdown-menu-right">
+          <div class="c-dropdown__menu has-arrow dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuAvatar">
             <a class="c-dropdown__item dropdown-item" href="{{ route ('admin.get_register')}}">Создать пользователя</a>
             <a class="c-dropdown__item dropdown-item" href="{{ route ('admin.get_login_out')}}">Выйти</a>
           </div>

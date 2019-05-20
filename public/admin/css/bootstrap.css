@@ -3520,7 +3520,7 @@ input[type="button"].btn-block {
   outline: 0;
 }
 
-.dropdown-menu {
+/* .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
@@ -3539,7 +3539,7 @@ input[type="button"].btn-block {
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
-}
+}*/
 
 .dropdown-menu.pull-right {
   right: 0;

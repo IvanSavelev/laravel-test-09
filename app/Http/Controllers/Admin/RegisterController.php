@@ -53,9 +53,9 @@ class RegisterController extends Controller
 			'password' => Hash::make($data['password']),
 		]);
 		
-		event(new Registered($user));
+		//event(new Registered($user));
 		$this->guard()->login($user);
-		return redirect('/admin/dashboard');
+		return redirect()->route('admin.dashboard');
 		
 	}
 	

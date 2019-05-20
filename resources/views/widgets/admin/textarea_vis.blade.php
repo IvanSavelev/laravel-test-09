@@ -1,4 +1,4 @@
-<div class="c-field u-mb-medium">
+<div class="c-field u-mb-medium summernote_text">
   <label class="c-field__label @if(!empty($required)) required @endif" for="{{ $name }}">{{ $config['label'] }}</label>
   <textarea class="summernote @if($errors->has($name))c-input--danger @endif" id="{{ $name }}" name="{{ $name }}">@if($value !== null){{$value}}@else{{ old($name) }}@endif</textarea>
   @if ($errors->has($name))

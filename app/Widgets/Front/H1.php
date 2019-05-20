@@ -5,7 +5,7 @@ namespace App\Widgets\Front;
 use App\F;
 use Arrilot\Widgets\AbstractWidget;
 
-class h1 extends AbstractWidget
+class H1 extends AbstractWidget
 {
 	use F; //Plug-in universal functions
 	

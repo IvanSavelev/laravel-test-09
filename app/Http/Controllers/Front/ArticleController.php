@@ -20,12 +20,12 @@ class ArticleController extends Controller
 	 */
 	public function articles()
 	{
-		$articles = Setting::where('key', 'page_articles')->first();
-		if(!empty($articles)) {
-			$articles = json_decode($articles->value, true);
+		$settings = Setting::where('key', 'page_articles')->first();
+		if(!empty($settings)) {
+			$settings = json_decode($settings->value, true);
 		}
 		$article_items_paginator = Article::paginate(50);
-		return view('front.article.articles', compact('article_items_paginator', 'articles'));
+		return view('front.article.articles', compact('article_items_paginator', 'settings'));
 	}
 	
 	public function article($article_id)
