@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
-class ArticleController extends Controllers\AdminController
+class ArticleController extends Controllers\Admin\AdminController
 {
-	use F; //Plug-in universal functions
+
 	public function parentUpdate()
 	{
 		$settings = Setting::where('key', 'page_articles')->first();
@@ -58,16 +58,7 @@ class ArticleController extends Controllers\AdminController
 		}
 	}
 	
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index()
-	{
-		$articles = Article::paginate(50);
-		return view('admin.article.article_list', compact('articles'));
-	}
+
 	
 	
 	/**
@@ -110,11 +101,11 @@ class ArticleController extends Controllers\AdminController
 		
 		$image_path = null;
 		if ($request->file('image') and $request->file('image')->isValid()) {
-			$this->deleteImageItem($article_id, 'article');
+			$this->deleteImageItem('article', $article_id);
 			$this->addImage($request->image, $article_id, 'article');
 		}
 		if ($request->delete_image) {
-			$this->deleteImageItem($article_id, 'article');
+			$this->deleteImageItem('article', $article_id);
 		}
 		
 		Validator::make($request->all(), [
@@ -148,18 +139,5 @@ class ArticleController extends Controllers\AdminController
 	}
 	
 	
-	/**
-	 * Delete image for product
-	 * @param Request $request
-	 * @return string
-	 */
-	public function delete(Request $request)
-	{
-		$ids_delete = $request->input('ids_delete');
-		$ids_delete = explode(',', $ids_delete);
-		Article::whereIn('article_id', $ids_delete)->delete();
-		foreach ($ids_delete as $item) {
-			Storage::disk('public')->deleteDirectory($this->getDirectoryFile() . $item . '/');
-		}
-	}
+
 }

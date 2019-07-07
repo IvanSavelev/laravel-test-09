@@ -1,9 +1,11 @@
-<div class="c-field u-mb-medium summernote_text">
-  <label class="c-field__label @if(!empty($required)) required @endif" for="{{ $name }}">{{ $config['label'] }}</label>
-  <textarea class="summernote @if($errors->has($name))c-input--danger @endif" id="{{ $name }}" name="{{ $name }}">@if($value !== null){{$value}}@else{{ old($name) }}@endif</textarea>
-  @if ($errors->has($name))
-    <small class="c-field__message u-color-danger">
-      <i class="feather icon-x-circle"></i>{{ $errors->first($name) }}
-    </small>
-  @endif
+<div class="form-group row">
+  <label for="{{ $name }}" class="col-sm-2 col-form-label @if($config['required']) required @endif">{{ $config['label'] }}</label>
+  <div class="col-sm-10">
+    <textarea id="summernote" class="form-control @if($errors->has($name))is-invalid @endif" id="{{ $name }}" name="{{ $name }}" rows="3">@if($value !== null){{$value}}@else{{ old($name) }}@endif</textarea>
+    @if ($errors->has($name))
+      <div class="invalid-feedback">
+        {{ $errors->first($name) }}
+      </div>
+    @endif
+  </div>
 </div>

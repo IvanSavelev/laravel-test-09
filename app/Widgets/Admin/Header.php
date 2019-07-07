@@ -22,6 +22,6 @@ class Header extends AbstractWidget
 		if($text === '') {
 			return "</br></br>";
 		}
-		return "<h2 class='c-field__label'>$text</h2>";
+		return "<h3 class='py-3'>$text</h3>";
 	}
 }

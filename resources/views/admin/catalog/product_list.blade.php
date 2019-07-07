@@ -2,120 +2,79 @@
 @section('content')
   @include('admin.helper_message', ['errors' => $errors, 'info' => session('status')])
   @include('admin.breadcrumbs', ['parents' => [], 'name' => 'Товары'])
+
   <div class="row">
     <div class="col-12">
-      <div class="u-mb-small u-text-right">
-        <a href="{{ route ('admin.product.add') }}" class="c-btn c-btn--info">Добавить</a>
-        <button data-type="delete" class="c-btn c-btn--danger"><i class="feather icon-trash-2"></i></button>
+      <div class="pb-3 float-right">
+        <a href="{{ route ('admin.product.add') }}" class="btn btn-primary">Добавить</a>
+        <button data-type="delete" class="btn btn-danger"><span class="icon"><i class="fas fa-trash"></i></span></button>
       </div>
     </div>
   </div>
+
   <div class="row">
     <div class="col-12">
-      <div class="u-mb-small c-table-responsive@wide">
-        <table class="c-table">
-          <thead class="c-table__head">
-          <tr class="c-table__row">
-            <th class="c-table__cell c-table__cell--head"></th>
-            <th class="c-table__cell c-table__cell--head">ID</th>
-            <th class="c-table__cell c-table__cell--head">Имя</th>
-            <th class="c-table__cell c-table__cell--head">Модель</th>
-            <th class="c-table__cell c-table__cell--head">Цена</th>
-            <th class="c-table__cell c-table__cell--head"></th>
-          </tr>
-          </thead>
 
-          <tbody>
-          @forelse($products as $product)
-            <tr class="c-table__row @if(!$product->visible) visible_off @endif">
-              <td class="c-table__cell">
-                <input class="c-choice__input" id="product_id" data-id="{{ $product->product_id }}" type="checkbox">
-              </td>
-              <td class="c-table__cell">{{ $product->product_id }}</td>
-              <td class="c-table__cell">
-                <div class="o-media">
-                  <div class="o-media__img u-mr-xsmall">
-                    <div class="c-avatar c-avatar--small">
-                      <img class="c-avatar__img" @empty($product->image) src="/admin/img/image_empty_72.png"
-                           @else src="{{ $product->image }}" @endif alt="{{ $product->title }}">
-                    </div>
-                  </div>
-                  <div class="o-media__body">
-                    <h6>{{ $product->title }}</h6>
-                    <p>{{ $product->h1 }}</p>
-                  </div>
-                </div>
-              </td>
-              <td class="c-table__cell">{{ $product->model }}</td>
-              <td class="c-table__cell">{{ number_format($product->price, 2, '.', ' ') }}</td>
 
-              <td class="c-table__cell">
-                <a href="{{ route ('admin.product.edit', $product->product_id) }}" class="c-btn c-btn--info"><i
-                        class="feather icon-edit-2"></i></a>
-              </td>
-            </tr>
-          @empty
-            <tr>
-              <td colspan="4"><p class="u-text-center">Нет товаров.</p></td>
-            </tr>
-          @endforelse
-          </tbody>
-        </table>
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Продукты</h6>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive overflow-hidden">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Изображение</th>
+                  <th>Имя</th>
+                  <th>Модель</th>
+                  <th>Цена</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              @forelse($products as $product)
+              <tr class="@if(!$product->visible) opticy-50 @endif">
+                <td class=" custom-checkbox pl-5 w-2">
+                  <input type="checkbox" class="custom-control-input" for="{{ $product->product_id }}" id="{{ $product->product_id }}" data-id="{{ $product->product_id }}">
+                  <label class="custom-control-label" for="{{ $product->product_id }}">{{ $product->product_id }}</label>
+                </td>
+                <td>
+                  <img class="c-avatar__img" @empty($product->image) src="/admin/img/simuclar/72.png"
+                       @else src="{{ $product->image }}" @endif alt="{{ $product->title }}">
+                </td>
+                <td>{{ $product->title }}</td>
+                <td>{{ $product->model }}</td>
+                <td>{{ number_format($product->price, 2, '.', ' ') }}</td>
+                <td>
+                  <a href="{{ route ('admin.product.edit', $product->product_id) }}" class="btn btn-primary btn-icon-split">
+                    <span class="icon">
+                      <i class="fas fa-arrow-right"></i>
+                    </span>
+                  </a>
+                </td>
+              </tr>
+              @empty
+                <tr>
+                  <td colspan="6"><p class="">Нет товаров.</p></td>
+                </tr>
+              @endforelse
+              </tbody>
+            </table>
+                @include('admin.helper_paginator', ['objects' => $products])
+          </div>
+        </div>
       </div>
+
+
+
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      @include('admin.helper_paginator', ['objects' => $products])
-    </div>
-  </div>
+
 @endsection
 
 @section('script_down_2')
-  <script>
-    $(document).ready(function () {
-      $('button[data-type=delete]').click(function () {
-        productDelete();
-        return false;
-      });
-    });
-
-    function productDelete() {
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      });
-      var form_data = new FormData();
-      var ids_delete = [];
-      $('input:checkbox:checked').each(function () {
-        ids_delete.push($(this).data('id'));
-      });
-      if (ids_delete.length <= 0) {
-        alert("Выберете объекты для удаления.");
-        return false;
-      }
-      var check = confirm("Вы уверены?");
-      if (check === false) {
-        return false;
-      }
-
-      form_data.append('ids_delete', ids_delete.join(","));
-      $.ajax({
-        data: form_data,
-        type: "POST",
-        url: '{{ url('/admin/product/delete') }}',
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function () {
-          $('input:checkbox:checked').each(function () {
-            var table_row = $(this).closest('tr').remove();
-          });
-          alert("Удаление прошло успешно.");
-        }
-      });
-    }
-
-  </script>
+  @include('admin.helper_script_list_delete', ['url' => '/admin/product/delete'])
 @endsection

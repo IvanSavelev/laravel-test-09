@@ -1,23 +1,18 @@
 @if ($errors->any())
   @foreach ($errors->all() as $error)
-    <div class="c-alert c-alert--danger alert">
-      <span class="c-alert__icon">
-        <i class="feather icon-slash"></i>
-      </span>
-      <div class="c-alert__content">
-        <p>{{ $error }}</p>
-      </div>
-      <button class="c-close" data-dismiss="alert" type="button">×</button>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ $error }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   @endforeach
 @endif
 @if ($info)
-  <div class="c-alert c-alert--success alert">
-      <span class="c-alert__icon">
-        <i class="feather icon-check"></i>
-      </span>
-    <div class="c-alert__content">
-      <p>{{ $info }}</p>
-    </div>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ $info }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 @endif

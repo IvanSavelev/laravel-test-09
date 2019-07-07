@@ -36,13 +36,13 @@ class LoginController extends Controller
 		if (Auth::check()) {
 			return	redirect()->route('admin.dashboard');
 		}
-		return view('admin.login');
+		return view('admin.login.login_form');
 	}
 	
 	public function getloginOut()
 	{
 		Auth::logout();
-		return redirect()->route('admin.get_login');
+		return redirect()->route('admin.login.login_form');
 	}
 	
 	

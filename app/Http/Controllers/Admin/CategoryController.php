@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class CategoryController extends Controllers\AdminController
+class CategoryController extends Controllers\Admin\AdminController
 {
 	/**
 	 * Display a listing of the resource.

@@ -42,7 +42,12 @@ class ListCheckbox extends AbstractWidget
 		$ids = [];
 		if(!empty($selected_ids)) {
 			if(is_array($selected_ids)) {
-				$ids = $this->val($selected_ids, $name, 'array');
+				if(isset($selected_ids[$name])) {
+					$ids = $this->val($selected_ids, $name, 'array');
+				} else {
+					$ids = $selected_ids;
+				}
+				
 			} else {
 				$ids = $selected_ids->$name;
 			}
