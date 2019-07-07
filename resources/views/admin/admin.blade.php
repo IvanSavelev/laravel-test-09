@@ -39,8 +39,8 @@
 <script src="/admin/vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page level custom scripts -->
-<script src="/admin/js/demo/chart-area-demo.js"></script>
-<script src="/admin/js/demo/chart-pie-demo.js"></script>
+{{-- <script src="/admin/js/demo/chart-area-demo.js"></script> --}}
+{{-- <script src="/admin/js/demo/chart-pie-demo.js"></script> --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 
@@ -85,6 +85,19 @@
     }
 
 </script>
+<script>
+   //Задает высоту контейнера с контентом
+   $(window).resize(contentScrollResize);
+   $(document).ready(contentScrollResize);
+   function contentScrollResize() {
+       var $height =  $('#navbar').height();
+       var $height_window = $(window).height();
+       var $height_content_scroll = $height_window - $height;
+       alert($height_content_scroll);
+       $('#content-scroll').height($height_content_scroll);
+
+   }
+  </script>
 @yield('script_down_1')
 @yield('script_down_2')
 </body>

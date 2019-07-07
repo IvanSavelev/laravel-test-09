@@ -21,7 +21,7 @@
           <h6 class="m-0 font-weight-bold text-primary">Продукты</h6>
         </div>
         <div class="card-body">
-          <div class="table-responsive overflow-hidden">
+          <div class="table-responsive overflow-auto">
 
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
