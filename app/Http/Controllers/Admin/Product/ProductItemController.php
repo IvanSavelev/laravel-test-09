@@ -122,12 +122,12 @@ class ProductItemController extends Controller
 	private function return($add_product)
 	{
 		if ($add_product) {
-			return redirect()->route('admin.product.list')->with('status', 'Продукт успешно добавлен!');
+			return redirect()->route('admin.product.list')->with('info', 'Продукт успешно добавлен!');
 		}
 		if (request('redirect_here', 0)) {
-			return redirect()->back()->with('status', 'Продукт успешно изменён!');
+			return redirect()->back()->with('info', 'Продукт успешно изменён!');
 		} else {
-			return redirect()->route('admin.product.list')->with('status', 'Продукт успешно изменён!');
+			return redirect()->route('admin.product.list')->with('info', 'Продукт успешно изменён!');
 		}
 	}
 

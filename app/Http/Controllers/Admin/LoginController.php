@@ -54,6 +54,8 @@ class LoginController extends Controller
 			// Authentication passed...
 			return	redirect()->route('admin.dashboard');
 		}
+		return redirect()->back()->with('error', 'Неправильный пароль!');
+
 	}
 	
 	

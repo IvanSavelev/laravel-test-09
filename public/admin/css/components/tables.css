@@ -1,0 +1,16 @@
+
+.table-responsive {
+  background-color: white;
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+  border-radius: 0.225rem;
+}
+
+.table-responsive table {
+  color: #3d3e46;
+}
+
+.table-responsive .table thead th {
+  vertical-align: middle;
+  border-bottom: 2px solid #00adef;
+}

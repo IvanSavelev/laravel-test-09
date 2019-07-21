@@ -52,20 +52,26 @@ Route::middleware(['web','auth'])->prefix('admin')->name('admin.')->group(functi
 	Route::get('article/add', 'Admin\Article\ArticleItemController@add')->name('article.add');
 	Route::get('article/{article_id}/edit', 'Admin\Article\ArticleItemController@edit')->name('article.edit');
 
+	//Route::get('article/{article_id}/edit', 'Admin\Article\ArticleItemController@edit')->name('article.edit');
+
 
 
 	Route::get('article/parent_update', 'Admin\ArticleController@parentUpdate')->name('article.parent_update');
 	Route::post('article/parent_save', 'Admin\ArticleController@parentSave')->name('article.parent_save');
 
-	Route::post('article/{article_id}', 'Admin\ArticleController@save')->name('article.save');
+	Route::post('article/save', 'Admin\ArticleController@save')->name('article.save');
+	//Route::post('article/save', 'Admin\ArticleController@save')->name('article.save');
 	//Route::resource('article', 'Admin\ArticleController')->except(['update', 'destroy', 'edit']);
-	
+
+
 	Route::get('index', 'Admin\Index\IndexController@form')->name('index.form');
 	Route::post('index', 'Admin\Index\IndexController@save')->name('index.save');
-	
+
+
 	Route::get('contact', 'Admin\ContactController@form')->name('contact.form');
 	Route::post('contact', 'Admin\ContactController@save')->name('contact.save');
-	
+
+
 	Route::fallback(function () { return redirect()->route('admin.dashboard');});
 });
 

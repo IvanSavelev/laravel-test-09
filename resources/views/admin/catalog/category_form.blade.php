@@ -3,7 +3,7 @@
 @section('object_type'){{$object_type}}@endsection
 @section('content')
   @include('admin.breadcrumbs', ['parents' => [['url' => '/admin/category', 'name' => 'Категории']], 'name' => 'Категория'])
-  @include('admin.helper_message', ['errors' => $errors, 'info' => session('status')])
+  @include('admin.helper.helper_messages', ['errors' => $errors, 'info' => session('status')])
 
   <div class="row">
     <div class="col-12">

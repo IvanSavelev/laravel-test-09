@@ -1,0 +1,9 @@
+.sds-header {
+  font-weight: 500;
+    font-size: 28px;
+        color: #00adef;
+}
+.sds-header:first-letter {
+    color: #ed2d23;
+  font-size: 29px;
+}

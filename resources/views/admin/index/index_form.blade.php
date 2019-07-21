@@ -1,7 +1,7 @@
 @extends('admin.basis')
 @section('object_type'){{$object_type}}@endsection
 @section('content')
-@include('admin.helper_message', ['errors' => $errors, 'info' => session('status')])
+@include('admin.helper.helper_messages', ['errors' => $errors, 'info' => session('status')])
 @include('admin.breadcrumbs',['name' => 'Главная'])
 
   <div class="row">

@@ -1,6 +1,6 @@
 @extends('admin.basis')
 @section('content')
-  @include('admin.helper_message', ['errors' => $errors, 'info' => session('status')])
+  @include('admin.helper.helper_messages', ['errors' => $errors, 'info' => session('status')])
   @include('admin.breadcrumbs', ['parents' => [], 'name' => 'Товары'])
 
   <div class="row">
