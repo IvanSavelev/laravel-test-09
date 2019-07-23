@@ -15,21 +15,6 @@ function contentScrollResize() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ЗВОНОК НА УКАЗАННЫЙ ТЕЛЕФОН */
 function f_call(phoneNumber) {
   $.ajax({

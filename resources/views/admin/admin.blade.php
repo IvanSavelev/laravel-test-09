@@ -28,11 +28,13 @@
   <link href="/admin/css/components/buttons.css" rel="stylesheet">
   <link href="/admin/css/components/checkbox.css" rel="stylesheet">
   <link href="/admin/css/components/datepicker (calendar).css" rel="stylesheet">
+  <link href="/admin/css/components/headers.css" rel="stylesheet">
   <link href="/admin/css/components/table_items.css" rel="stylesheet">
   <link href="/admin/css/components/tables.css" rel="stylesheet">
   <link href="/admin/css/components/window_modals.css" rel="stylesheet">
   <link href="/admin/css/components/input_text.css" rel="stylesheet">
   <link href="/admin/css/components/labels.css" rel="stylesheet">
+  <link href="/admin/css/components/loaders.css" rel="stylesheet">
   <link href="/admin/css/components/selects.css" rel="stylesheet">
 
   <link href="/admin/css/blocks/panel_left.css" rel="stylesheet">
@@ -58,7 +60,6 @@
 <script src="/admin/vendor/moment/moment-with-locales.js"></script> <!-- для работы с датой (без этой библиотеки не будет работать плагин tempusdominus-bootstrap-4 -->
 <script src="/admin/vendor/moment/locale/ru.js"></script>
 
-
 <script src="/admin/vendor/tempusdominus/tempusdominus-bootstrap-4.js"></script> <!-- для отображения калдендаря -->
 <script src="/admin/vendor/bootstrap-select/js/bootstrap-select.js"></script> <!-- для отображения списков -->
 <script src="/admin/vendor/summernote/summernote-bs4.js"></script>  <!-- для отображения визивика -->
@@ -67,6 +68,7 @@
 <script src="/admin/js/panel_left_scroll.js"></script>
 <script src="/admin/js/widgets.js"></script>
 <script src="/admin/js/public.js"></script>
+<script src="/admin/js/ajax.js"></script>
 
 @yield('script_down_1')
 @yield('script_down_2')
