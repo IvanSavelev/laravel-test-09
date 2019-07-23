@@ -89,6 +89,6 @@ Route::get('article/{article_id}', 'Front\ArticleController@article')->name('fro
 
 Route::get('/contact/', 'Front\ContactController@index')->name('front.contact');
 //Route::get('/index', 'Front\IndexController@index')->name('front.index');
-Route::fallback(function () {
+/*Route::fallback(function () {
 	return redirect()->route('front.index');
-});
+});*/

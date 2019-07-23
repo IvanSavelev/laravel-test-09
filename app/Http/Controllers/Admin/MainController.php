@@ -19,7 +19,7 @@ class MainController extends Controller
 	public  function send_file(Request $request) {
 		if ($request->file('photo')->isValid()) {
 			$photo_file = $request->photo->getClientOriginalName();
-			$photo_filename = pathinfo($photo_file, PATHINFO_FILENAME);
+			$photo_filename = pathinfo($photo_file, PATHINFO_FILENAME);//впыодло
 			$photo_filename = str_slug($photo_filename, '-'); //Translator
 			$photo_extension = $request->photo->extension();
 			$photo_name = $photo_filename . '.' . time() . '.' . $photo_extension;
