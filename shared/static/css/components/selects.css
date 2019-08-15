@@ -1,0 +1,10 @@
+/*.dropdown-menu.show[x-placement="top-start"] .bs-searchbox {
+  position: absolute;
+    bottom: 6px;
+    width: 100%;
+}*/
+.dropdown-menu.show[x-placement="top-start"]{
+     display: flex;
+    flex-flow: column-reverse;
+}
+

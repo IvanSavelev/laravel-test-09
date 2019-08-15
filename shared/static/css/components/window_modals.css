@@ -1,0 +1,39 @@
+.modal-content {
+  border-radius: .2rem;
+  color: #1f1f1f;
+}
+
+.modal-content .close span {
+  font-size: 1.8rem;
+}
+
+.modal-content .modal-title {
+  position: relative;
+  z-index: 0;
+  left: 18px;
+}
+
+.modal-content .modal-title {
+  font-weight: 500;
+  font-size: 28px;
+  color: #1f1f1f;
+  letter-spacing: 0;
+  line-height: 1.2857142857143;
+}
+
+.modal-content .modal-title:before {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 2px;
+  left: -9px;
+  width: 26px;
+  height: 33px;
+  background: #ed2d23;
+  -webkit-transform: skewX(-28.5deg);
+  -moz-transform: skewX(-28.5deg);
+  -ms-transform: skewX(-28.5deg);
+  -o-transform: skewX(-28.5deg);
+  transform: skewX(-28.5deg);
+  z-index: -1;
+}
